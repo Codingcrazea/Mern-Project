@@ -24,6 +24,9 @@ app.get("/",(req,res)=>{
     res.send("<h1>This is website </h1>");
 });
 
+// Node Js To React code getdata is api suffix that is recieved in Contact.js file use that code to send and recieve data from backend 
+
+
 app.get("/getdata",(req,res)=>{
     res.send("Hello data is reerved");
 });
