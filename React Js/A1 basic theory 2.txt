@@ -1,0 +1,3 @@
+String variable can accesed using $ sign 
+
+$variable name 

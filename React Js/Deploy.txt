@@ -1,0 +1,5 @@
+First run : npm run build to create a deploy file 
+
+Upload it to file manager of web hosting
+
+Problems occured : our website css may change

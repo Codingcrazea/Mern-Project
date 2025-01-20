@@ -1,0 +1,25 @@
+We use UseRef for single input element  
+
+
+import { useRef, useState } from "react";
+export default function I(){
+   var a  =useRef()
+   var b = useRef()
+   const[x,SetX] = useState()
+
+   var getData = () =>{
+    var first = a.current.value*1
+    var second = b.current.value*1  // to convert string to integer * 1
+
+    SetX(first+second)
+   }
+    return <>
+    <input type="text" placeholder="Value of a " ref={a} /><br/>
+    <input type="text" placeholder="Value of y" ref={b}/><br/>
+    <button onClick={getData}>Add</button><br/>
+    <h1> Sum is {x}</h1>
+    
+    </>
+      
+
+}

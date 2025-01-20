@@ -1,0 +1,6 @@
+install node from google and restart system
+
+
+cmd : 
+install 
+npm install create-react-app -g

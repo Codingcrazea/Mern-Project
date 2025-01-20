@@ -1,0 +1,97 @@
+Then open json file as we want to remove test s
+
+
+For building real app we will remove 
+
+"test" "echo \" Error: no test specified\" && exit 1" inside "scripts
+  
+
+___________________________________________________________
+package.json :
+{  
+  "name": "reactApp",  
+  "version": "1.0.0",  
+  "description": "",  
+  "main": "index.js",  
+  "scripts": {  
+    "start": "webpack-dev-server --mode development --open --hot",  
+    "build": "webpack --mode production"  
+  },  
+  "keywords": [],  
+  "author": "",  
+  "license": "ISC",  
+  "dependencies": {  
+    "react": "^16.8.6",  
+    "react-dom": "^16.8.6",  
+    "webpack-cli": "^3.3.1",  
+    "webpack-dev-server": "^3.3.1"  
+  },  
+  "devDependencies": {  
+    "@babel/core": "^7.4.3",  
+    "@babel/preset-env": "^7.4.3",  
+    "@babel/preset-react": "^7.0.0",  
+    "babel-core": "^6.26.3",  
+    "babel-loader": "^8.0.5",  
+    "babel-preset-env": "^1.7.0",  
+    "babel-preset-react": "^6.24.1",  
+    "html-webpack-plugin": "^3.2.0",  
+    "webpack": "^4.30.0"  
+  }  
+}  
+
+__________________________________________________________
+index.html :
+
+We can add a custom template to generate index.html 
+using the HtmlWeb-packPlugin plugin. 
+This enables us to add a viewport tag to support mobile 
+responsive scaling of our app. 
+It also set the div id = "app" as a root element for your app 
+and adding the index_bundle.js script, 
+which is our bundled app file.
+
+
+<!DOCTYPE html>  
+<html lang = "en">  
+   <head>  
+      <meta charset = "UTF-8">  
+      <title>React App</title>  
+   </head>  
+   <body>  
+      <div id = "app"></div>  
+      <script src = 'index_bundle.js'></script>  
+   </body>  
+</html>  
+
+_________________________________________________________________________
+
+App.jsx and main.js
+
+This is the first React component, i.e. app entry point. It will render Hello World.
+
+This file will represent the app .
+App.js
+
+import React, { Component } from 'react';  
+class App extends Component{  
+   render(){  
+      return(  
+         <div>  
+            <h1>Hello World</h1>  
+         </div>  
+      );  
+   }  
+}  
+export default App;  
+
+
+_____________________________
+Now, import this component and render 
+it to your root App element so that you can see it in the browser.
+
+
+import React from 'react';  
+import ReactDOM from 'react-dom';  
+import App from './App.js';  
+  
+ReactDOM.render(<App />, document.getElementById('app'));  

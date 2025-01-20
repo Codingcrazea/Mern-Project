@@ -1,0 +1,1 @@
+private property : if it is true npm will refuse to publish it 

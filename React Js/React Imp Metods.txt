@@ -1,0 +1,186 @@
+In React, lifecycle methods are special methods that are called at different stages of a component's lifecycle. These methods are used to run code at specific points in a component’s lifecycle.
+
+### 1. componentDidMount
+
+`componentDidMount` is invoked immediately after a component is mounted (inserted into the tree). Initialization that requires DOM nodes should go here. If you need to load data from a remote endpoint, this is a good place to instantiate the network request.
+
+```jsx
+import React, { Component } from 'react';
+
+class MyComponent extends Component {
+  componentDidMount() {
+    // Run some code after the component has mounted
+    console.log('Component did mount');
+    fetch('https://api.example.com/data')
+      .then(response => response.json())
+      .then(data => this.setState({ data }));
+  }
+
+  render() {
+    return <div>My Component</div>;
+  }
+}
+
+export default MyComponent;
+```
+
+Explanation:
+- `componentDidMount` runs once, immediately after the initial rendering.
+- It's commonly used for data fetching, setting up subscriptions, or initializing third-party libraries.
+
+### 2. componentDidUpdate
+
+`componentDidUpdate` is invoked immediately after updating occurs. This method is not called for the initial render. It’s useful for operations that need to happen when the component updates, such as updating the DOM in response to prop or state changes.
+
+```jsx
+import React, { Component } from 'react';
+
+class MyComponent extends Component {
+  state = { count: 0 };
+
+  componentDidUpdate(prevProps, prevState) {
+    // Run some code after the component updates
+    if (prevState.count !== this.state.count) {
+      console.log('Count has changed:', this.state.count);
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+          Increment
+        </button>
+      </div>
+    );
+  }
+}
+
+export default MyComponent;
+```
+
+Explanation:
+- `componentDidUpdate` receives previous props and state as arguments.
+- It’s commonly used to perform operations in response to prop or state changes, like making network requests or interacting with the DOM.
+
+### 3. componentWillUnmount
+
+`componentWillUnmount` is invoked immediately before a component is unmounted and destroyed. Perform any necessary cleanup in this method, such as invalidating timers, canceling network requests, or cleaning up subscriptions.
+
+```jsx
+import React, { Component } from 'react';
+
+class MyComponent extends Component {
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    // Clean up before the component is unmounted
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    console.log('Tick');
+  }
+
+  render() {
+    return <div>My Component</div>;
+  }
+}
+
+export default MyComponent;
+```
+
+Explanation:
+- `componentWillUnmount` is used for cleanup before the component is removed from the DOM.
+- Common uses include clearing timers, cancelling network requests, or unsubscribing from events.
+
+### Methods with Prefix "get"
+
+Methods with the prefix "get" are not lifecycle methods but are often used in class components to derive state or props. These methods can help encapsulate logic and make the component more readable.
+
+#### getDerivedStateFromProps
+
+`getDerivedStateFromProps` is a static method that is invoked right before calling the render method, both on the initial mount and on subsequent updates. It should return an object to update the state, or null to update nothing.
+
+```jsx
+import React, { Component } from 'react';
+
+class MyComponent extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.value !== prevState.value) {
+      return { value: nextProps.value };
+    }
+    return null;
+  }
+
+  state = {
+    value: ''
+  };
+
+  render() {
+    return <div>{this.state.value}</div>;
+  }
+}
+
+export default MyComponent;
+```
+
+Explanation:
+- `getDerivedStateFromProps` allows the state to be updated in response to prop changes.
+- It’s often used to derive state from props when the state depends on props.
+
+#### getSnapshotBeforeUpdate
+
+`getSnapshotBeforeUpdate` is invoked right before the most recently rendered output is committed to the DOM. It enables your component to capture some information (e.g., scroll position) from the DOM before it is potentially changed.
+
+```jsx
+import React, { Component } from 'react';
+
+class MyComponent extends Component {
+  state = { messages: [] };
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    if (prevState.messages.length < this.state.messages.length) {
+      return this.messagesEnd.scrollHeight;
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (snapshot !== null) {
+      this.messagesEnd.scrollTop = this.messagesEnd.scrollHeight - snapshot;
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <ul>
+          {this.state.messages.map((msg, index) => (
+            <li key={index}>{msg}</li>
+          ))}
+        </ul>
+        <div ref={el => (this.messagesEnd = el)} />
+      </div>
+    );
+  }
+}
+
+export default MyComponent;
+```
+
+Explanation:
+- `getSnapshotBeforeUpdate` is used to capture the state of the DOM before it changes.
+- It returns a value (snapshot) that is passed to `componentDidUpdate`.
+
+### Summary
+
+- **componentDidMount**: Invoked immediately after a component is mounted. Used for initialization, like data fetching.
+- **componentDidUpdate**: Invoked immediately after updating occurs. Used for performing operations in response to prop or state changes.
+- **componentWillUnmount**: Invoked immediately before a component is unmounted and destroyed. Used for cleanup.
+- **getDerivedStateFromProps**: A static method invoked before rendering, both on the initial mount and on updates. Used to update state based on props.
+- **getSnapshotBeforeUpdate**: Invoked right before the latest rendered output is committed to the DOM. Used to capture the state of the DOM before changes.
+
+These methods are essential for managing the lifecycle of class components in React. However, with the advent of hooks in functional components, these methods have corresponding hooks like `useEffect` for most of their use cases.

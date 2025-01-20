@@ -1,0 +1,4 @@
+Javascript have a way to add items to list 
+
+State is a list : adding values to list by adding before all values including new value name 
+state.value = [...state.value,name];   // ...state.value is value upto 

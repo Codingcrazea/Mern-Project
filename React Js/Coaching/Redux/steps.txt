@@ -1,0 +1,130 @@
+Install redux on react npm install react-redux
+
+UseDispatch used to update data 
+useSelector is used to show data
+
+
+First create a slice.jsx file and store.jsx file , user component file .jsx
+
+In main.jsx file we import store.jsx and and pass it to app
+
+<Provider store={newstore}>
+    <App />
+    </Provider>
+
+In App.jsx we show data using useSelector
+
+
+Slice.jsx file contain codes to store values and control crud operation on values array
+
+Slice.jsx code:
+
+import { createSlice } from "@reduxjs/toolkit"   // createSlice built-in method , takes object as argument 
+const slice = createSlice({
+  name :"mydata",   // data name
+  initialState : {
+    value : ["A","B","C","D"]    // array stores value
+  },
+  reducers:{                                                            // reducer property stores function to perform operation on data
+    adduser :(state,action)=>{
+      var name = action.payload;     // action accepts new value that is passed from ui file using useDispatch object
+      state.value = [...state.value,name]              // spread operator  to store value as per condition
+    } , // state access already created data action will add new recieved data 
+   
+    removeUserName:(state,action)=>{
+        var name = action.payload;
+        state.value = state.value.filter(nm=>nm != name);
+    },
+
+export const{addUserName,removeUserName} = slice.actions;  // export methods  
+
+}
+
+})
+export default slice.reducer;
+
+
+___________________________________________________________________________
+Store.jsx :
+
+this file contain codes to configure data 
+
+import { configureStore } from "@reduxjs/toolkit";
+import userSliceReducer from './Slice.jsx';
+
+const store = configureStore({
+  reducer:{
+   "username":userSliceReducer
+  }
+})
+
+
+________________________________________________________________________
+
+export default store;
+
+
+_____________________________________________________________________________________________________
+App.jsx  :
+
+import { useSelector } from 'react-redux'
+function App() {
+  
+  const data = useSelector(state=>state.username.value)  // username is that given in store.jsx
+// username is that key we used in store.jsx 
+
+  return (
+    <>
+      <div>
+        {data}
+        {data.map(e => <b>{e} &nbsp;</b>)}  // function print all value we can also show values in table 
+      </div>
+    </>
+  )
+}
+
+export default App
+
+
+
+
+___________________________________________________________
+
+User component.jsx :
+
+Here we show data and change it
+
+useDispatch(); : used to update data 
+
+from app.jsx code we can copy useSelector data 
+
+
+import { useRef } from "react"
+import { useDispatch } from "react-redux";   // usedispatch   used to recieve data 
+import { addUserName, removeUserName } from "./Redux/Slice";   // import function 
+
+function UserComponent()
+{
+    var name = useRef()
+    const dispatch = useDispatch();
+    var addName = ()=>{
+      var nm = name.current.value;
+      dispatch(addUserName(nm));    in dispatch function we pass value to slice .jsx file that value is a argument to a function already declared in
+                                                             slice.jsx which will change value
+                                                             
+   }
+   
+   var removeName = ()=>{
+    var nm = name.current.value; 
+     dispatch(removeUserName(nm))
+   }
+
+    return<div>
+      <input type="text" placeholder="Enter Name" ref={name}/>
+      &nbsp;&nbsp;
+      <button onClick={addName}>Add Name</button>
+      &nbsp;&nbsp;
+      <button onClick={removeName}>Remove Name</button>
+    </div>
+}
+export default UserComponent

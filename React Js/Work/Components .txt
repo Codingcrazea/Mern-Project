@@ -1,0 +1,191 @@
+https://www.w3schools.com/REACT/react_components.asp
+
+When creating a React component, the 
+
+Tips : Class component  
+
+component's name  MUST start with an upper case letter.
+
+A class component must include the extends React.Component statement. This statement creates an inheritance to React.Component, 
+and gives your component access to React.Component's functions.
+
+class Car extends React.Component {
+  render() {
+    return <h2>Hi, I am a Car!</h2>;
+  }
+}
+
+
+Class component full details : 
+
+
+**Exporting a Class Component in React**
+
+To export a class component in React, you use the `export default` keyword before the class declaration. This allows you to import the component into other parts of your application using a simpler syntax.
+
+```javascript
+import React, { Component } from 'react';
+
+export default class MyComponent extends Component {
+  // ... component logic ...
+}
+```
+
+**Key Tips for Working with Class Components**
+
+1. **Constructor:**
+   - The constructor is where you typically initialize the component's state.
+   - Use `super()` to call the parent class's constructor (usually `Component`).
+   - Define the initial state of the component using the `this.state` object.
+
+   ```javascript
+   constructor(props) {
+     super(props);
+     this.state = {
+       // Initial state values
+     };
+   }
+   ```
+
+2. **Setting State:**
+   - Use the `this.setState()` method to update the component's state.
+   - `setState()` is asynchronous and may not immediately reflect the updated state in the render method.
+   - Pass an object to `setState()` with the key-value pairs you want to update.
+
+   ```javascript
+   handleClick = () => {
+     this.setState({ count: this.state.count + 1 });
+   };
+   ```
+
+3. **Lifecycle Methods:**
+   - React provides several lifecycle methods that you can override to perform actions at different stages of the component's lifecycle.
+   - Common lifecycle methods include:
+     - `componentDidMount`: Called after the component is first rendered.
+     - `componentDidUpdate`: Called after the component updates.
+     - `componentWillUnmount`: Called before the component is unmounted from the DOM.
+
+   ```javascript
+   componentDidMount() {
+     // Perform side effects here
+   }
+   ```
+
+4. **Rendering:**
+   - The `render()` method is responsible for returning the JSX that represents the component's UI.
+   - Access state and props within the `render()` method using `this.state` and `this.props`.
+
+   ```javascript
+   render() {
+     return (
+       <div>
+         {/* JSX using state and props */}
+       </div>
+     );
+   }
+   ```
+
+5. **Binding Event Handlers:**
+   - If you need to access `this` within an event handler, you need to bind the event handler to the component instance.
+   - You can bind in the constructor or use the arrow function syntax.
+
+   ```javascript
+   // In constructor
+   constructor(props) {
+     super(props);
+     this.handleClick = this.handleClick.bind(this);
+   }
+
+   // Using arrow function
+   handleClick = () => {
+     // ...
+   };
+   ```
+
+**Example:**
+
+```javascript
+import React, { Component } from 'react';
+
+export default class Counter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState({ count: this.state.count + 1 });
+  }
+
+  render() {
+    return (
+      <div>
+        <p>Count: {this.state.count}</p>
+        <button onClick={this.handleClick}>Increment</button>
+      </div>
+    );
+  }
+}
+```
+
+By following these tips and using class components effectively, you can build complex and interactive user interfaces in React.
+
+
+______________________________________________________
+Tips : Functions component :
+A Function component also returns HTML,
+
+function Car() {
+  return <h2>Hi, I am a Car!</h2>;
+}
+
+
+___________________________________________________________
+Render a component in a root element :
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Car />);
+
+
+Use the Car component inside the Garage component:
+
+function Car() {
+  return <h2>I am a Car!</h2>;
+}
+
+function Garage() {
+  return (
+    <>
+      <h1>Who lives in my Garage?</h1>
+      <Car />
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Garage />);
+
+_________________________________________________________
+WE can also put code in a file with .js extension and import it in react .
+
+This is the new file, we named it "Car.js":
+
+function Car() {
+  return <h2>Hi, I am a Car!</h2>;
+}
+
+export default Car;
+
+
+
+// Import component :
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import Car from './Car.js';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Car />);
+
+

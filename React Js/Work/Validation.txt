@@ -1,0 +1,180 @@
+Using Class Component : 
+
+We need to create an array while getting data need to replace it by later created array other than defined in constructor
+
+import React from "react";
+class Employee extends React.Component
+{
+  constructor()
+  {
+    super()
+    this.state={emp:[],checkFieldStatus:false,isIdExists:false,isMobileExists:false}
+  }
+
+ componentDidMount()
+ {
+   this.getDataFromLocalStorage();
+ }
+
+ getDataFromLocalStorage = ()=>{
+   alert("asdhjasvc ");
+ }
+
+
+  getEmployee = ()=>{
+      
+     var eid = this.id.value*1;
+     var ename = this.name.value;
+     var econtact = this.contact.value*1;
+     var esalary = this.salary.value*1;
+     var eexp = this.exp.value*1;
+     var edept = this.dept.value;
+  
+     console.log(eid+" : "+ename+" : "+econtact+" : "+esalary+" : "+eexp+" : "+edept);
+     //Create Object
+
+     if(eid != 0 && ename.length != 0 && econtact != 0 && esalary != 0 && eexp != 0 && edept.length != 0)
+     {
+        var emp = {id:eid,name:ename,contact:econtact,salary:esalary,exp:eexp,dept:edept}
+       
+        //Get Array State & ths state assign in another variable
+        var arr = this.state.emp;
+       
+        //put object in Array
+        arr.push(emp)
+       
+        //Change State
+       this.setState({emp:arr}); 
+
+       this.setState({checkFieldStatus:false});
+
+       //Save Data in Local Storage
+
+
+       //CLear All Fields
+       this.clearFields();
+     }
+     else
+     {
+          this.setState({checkFieldStatus:true})
+     }
+     
+    }
+    clearFields = ()=>{
+      this.id.value = ''
+      this.name.value = ''
+      this.contact.value = '';
+      this.salary.value = '';
+      this.exp.value = '';
+      
+    }
+    checkId = (event)=>{
+      var data = event.target.value;
+     
+      for(let e of this.state.emp)
+      {
+         if(e.id == data)
+         {
+            this.setState({isIdExists:true});
+         }
+      }
+    }
+      checkMobile = (event)=>{
+        var data = event.target.value;
+       
+        for(let e of this.state.emp)
+        {
+           if(e.contact == data)
+           {
+              this.setState({isMobileExists:true});
+           }
+        }
+
+    }
+  render()
+  {
+    return<div className="container text-center">
+      <h1 style={{color:'red'}}>Employee App</h1>
+      <h1>Enter Employee Data</h1>
+      <div className="row">
+      <div className="col-md-4 form-group">
+        <input type="number" className="form-control" onBlur={this.checkId} 
+        onFocus={()=>this.setState({isIdExists:false})} ref={(data)=>this.id = data} placeholder="Enter Employee Id"/>
+      </div>
+      <div className="col-md-4 form-group">
+        <input type="text" className="form-control" ref={(data)=>this.name = data} placeholder="Enter Employee Name"/>
+      </div>
+      <div className="col-md-4 form-group">
+        <input type="number" className="form-control" ref={(data)=>this.contact = data} onBlur={this.checkMobile} 
+        onFocus={()=>this.setState({isMobileExists:false})} placeholder="Enter Employee Contact"/>
+      </div>
+      </div> 
+      <div className="row">
+      <div className="col-md-4 form-group">
+        <input type="number" className="form-control" ref={(data)=>this.salary = data} placeholder="Enter Employee Salary"/>
+      </div>
+      <div className="col-md-4 form-group">
+        <input type="number" className="form-control" ref={(data)=>this.exp = data} placeholder="Enter Employee Experience"/>
+      </div>
+      <div className="col-md-4 form-group">
+        <select className="form-control" ref={(data)=>this.dept = data}>
+            <option value=''>Employee Department</option>
+            <option value="admin">Admin</option>
+            <option value="recp">Reception</option>
+            <option value="hr">HR</option>
+            <option value="account">Account</option>
+            <option value="wde">Devlopment</option>
+        </select>
+      </div>
+      </div> 
+      {(this.state.isIdExists || this.state.isMobileExists) ? <h1 style={{textAlign:'center',color:'red'}}>
+        Id or Mobile May be alreday Exists
+        </h1>
+        :
+        <div className="row form-group">
+        <input type="button" className="form-control btn btn-success" onClick={this.getEmployee} 
+        value="Save Data"/>
+        </div> 
+      }
+      {this.state.checkFieldStatus ?<h3 style={{color:'red',textAlign:'center'}}>Plz Enter Data on Fields</h3>
+      : ""}
+     <hr/>
+     <h1>Show Employee Record's</h1>
+     <div className="row table-responsive">
+         <table className="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                 <th>S.no</th>
+                 <th>Id</th>
+                 <th>Name</th>
+                 <th>Salary</th>
+                 <th>Dept</th>
+                 <th>Contact</th>
+                 <th>Exp</th>
+                 <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+              {this.state.emp.map((employee,index)=>{
+                     return<tr>
+                      <td>{index+1}</td>
+                      <td>{employee.id}</td>
+                      <td>{employee.name}</td>
+                      <td>{employee.salary}</td>
+                      <td>{employee.dept}</td>
+                      <td>{employee.contact}</td>
+                      <td>{employee.exp}</td>
+                      <td>
+                        <button className="btn btn-success">Edit</button>
+                        &nbsp;&nbsp;||&nbsp;&nbsp;
+                        <button className="btn btn-danger">Delete</button>
+                      </td>
+                     </tr>
+              })}
+            </tbody>
+         </table>
+     </div> 
+    </div>
+  }
+}
+export default Employee;

@@ -1,0 +1,23 @@
+Class component :
+
+In Class component variables are created using this.variable_name
+
+We create method directly in class component and method cannot be craeted under render method
+
+Get user input data :
+
+
+render(){
+        return <>
+        <input type="text" placeholder="Value of a " ref={(data)=>this.a=data} />&nbsp;  // value is stored in this.a
+        <input type="text" placeholder="Value of b " ref={(data)=>this.b=data}/>
+        <button onClick={this.getData}>Send Data</button>
+        
+
+In method other than render 
+getData=()=>{
+        var p = this.a.value;
+        var q = this.b.value;
+}
+
+__________________________________________________________________________________________________

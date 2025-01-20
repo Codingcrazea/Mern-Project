@@ -1,0 +1,67 @@
+Here are 15 useful methods and concepts commonly used in React.js for web development:
+
+1. **`setState()`**
+   - Used to update the state of a component, triggering a re-render.
+
+2. **`useState()`**
+   - A Hook that lets you add state to functional components.
+
+3. **`useEffect()`**
+   - A Hook for performing side effects in functional components (e.g., data fetching, subscriptions).
+
+4. **`useContext()`**
+   - A Hook that lets you subscribe to React context without introducing nesting.
+
+5. **`useReducer()`**
+   - An alternative to `useState` for managing more complex state logic in functional components.
+
+6. **`useCallback()`**
+   - Returns a memoized callback function that only changes if one of the dependencies has changed.
+
+7. **`useMemo()`**
+   - Returns a memoized value that only recalculates if one of the dependencies has changed.
+
+8. **`useRef()`**
+   - Creates a mutable object which holds a `.current` property, often used to reference DOM elements.
+
+9. **`useLayoutEffect()`**
+   - Similar to `useEffect`, but it fires synchronously after all DOM mutations.
+
+10. **`useImperativeHandle()`**
+    - Customizes the instance value that is exposed when using `ref`.
+
+11. **`ComponentDidMount()`**
+    - Lifecycle method that runs after the component is inserted into the DOM (Class components).
+
+12. **`ComponentDidUpdate()`**
+    - Lifecycle method that runs after the component updates (Class components).
+
+13. **`ComponentWillUnmount()`**
+    - Lifecycle method that runs before the component is removed from the DOM (Class components).
+
+14. **`shouldComponentUpdate()`**
+    - Lifecycle method that decides if a component should re-render (Class components).
+
+15. **`getDerivedStateFromProps()`**
+    - Lifecycle method used to update the state based on props (Class components).
+
+16. **`render()`**
+    - Method required in class components to return the JSX that renders the component.
+
+17. **`propTypes`**
+    - Typechecking for props passed to a component.
+
+18. **`defaultProps`**
+    - Sets default values for props.
+
+19. **`createContext()`**
+    - Creates a context object for state management.
+
+20. **`forwardRef()`**
+    - Allows passing refs through a component to one of its children.
+
+21. **`memo()`**
+    - Higher-order component that memoizes a functional component to prevent unnecessary re-renders.
+
+These methods and hooks are essential tools in React.js, helping developers manage state, handle side effects, interact with the DOM, 
+and optimize performance.

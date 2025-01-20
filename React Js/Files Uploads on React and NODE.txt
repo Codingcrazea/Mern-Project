@@ -1,0 +1,201 @@
+Here’s the updated code to handle **validation of files** on both the **React frontend** and the **Node.js backend**. This includes a check to ensure at least two files are uploaded, and validations for file type and size.
+
+---
+
+//to extract body data from request(POST, PUT, DELETE, PATCH)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
+//to allow cors request
+app.use(cors())
+
+// to allow file input
+app.use(fileUpload());
+
+### **React: Frontend Validation**
+
+```javascript
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const MultipleFileUploadWithValidation = () => {
+    const [files, setFiles] = useState([]);
+
+    // Handle file selection
+    const handleFileChange = (e) => {
+        setFiles(e.target.files);
+    };
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (files.length < 2) {
+            alert("You must select at least two files.");
+            return;
+        }
+
+        // Validate file types and size
+        const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+        const maxFileSize = 5 * 1024 * 1024; // 5 MB
+
+        for (let i = 0; i < files.length; i++) {
+            if (!allowedTypes.includes(files[i].type)) {
+                alert(`Invalid file type: ${files[i].name}. Only JPEG, PNG, and PDF files are allowed.`);
+                return;
+            }
+
+            if (files[i].size > maxFileSize) {
+                alert(`File too large: ${files[i].name}. Maximum allowed size is 5 MB.`);
+                return;
+            }
+        }
+
+        // Create FormData object
+        const formData = new FormData();
+        Array.from(files).forEach((file) => {
+            formData.append('files', file);
+        });
+
+        try {
+            // Make API request
+            const response = await axios.post('http://localhost:5000/upload-multiple', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            alert(`Files uploaded successfully: ${JSON.stringify(response.data.files)}`);
+        } catch (error) {
+            console.error("Error uploading files:", error);
+            alert("Failed to upload files.");
+        }
+    };
+
+    return (
+        <div>
+            <h1>Upload Multiple Files with Validation</h1>
+            <form onSubmit={handleSubmit}>
+                <input type="file" multiple onChange={handleFileChange} />
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+    );
+};
+
+export default MultipleFileUploadWithValidation;
+```
+
+---
+
+### **Node.js: Backend Validation**
+
+Update the backend to include file validations for:
+1. **Minimum Number of Files** (at least 2 files).
+2. **Allowed File Types**.
+3. **Maximum File Size**.
+
+```javascript
+const express = require('express');
+const multer = require('multer');
+const cors = require('cors');
+const path = require('path');
+
+const app = express();
+const PORT = 5000;
+
+// Enable CORS
+app.use(cors());
+
+// Configure Multer
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    },
+});
+
+const upload = multer({
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB size limit
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+        if (!allowedTypes.includes(file.mimetype)) {
+            return cb(new Error('Invalid file type. Only JPEG, PNG, and PDF are allowed.'));
+        }
+        cb(null, true);
+    },
+});
+
+// API Route to handle multiple file uploads
+app.post('/upload-multiple', (req, res, next) => {
+    const uploadHandler = upload.array('files', 10); // Maximum 10 files allowed
+
+    uploadHandler(req, res, (err) => {
+        if (err) {
+            if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
+                return res.status(400).json({ message: 'File too large. Maximum allowed size is 5 MB.' });
+            }
+            return res.status(400).json({ message: err.message });
+        }
+
+        // Check if at least 2 files are uploaded
+        if (!req.files || req.files.length < 2) {
+            return res.status(400).json({ message: 'You must upload at least two files.' });
+        }
+
+        const filePaths = req.files.map((file) => `/uploads/${file.filename}`);
+
+        res.status(200).json({
+            message: 'Files uploaded successfully!',
+            files: filePaths,
+        });
+    });
+});
+
+// Serve uploaded files statically
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+```
+
+---
+
+### **Key Features**
+
+1. **Frontend Validation:**
+   - Checks for at least two files.
+   - Validates file type (JPEG, PNG, PDF).
+   - Validates file size (max 5 MB per file).
+
+2. **Backend Validation:**
+   - Enforces minimum file count (at least 2 files).
+   - Enforces file type restrictions.
+   - Enforces maximum file size (5 MB).
+
+---
+
+### **Test the Setup**
+
+1. **React Frontend:**
+   - Select fewer than 2 files to trigger the "at least two files" validation.
+   - Select files of invalid types or larger than 5 MB to trigger the respective validations.
+
+2. **Node.js Backend:**
+   - The server will also enforce all validation rules independently of the frontend.
+
+---
+
+### **Optional Enhancements**
+
+- **Dynamic File Type Restrictions:**  
+  Pass allowed types from the frontend as part of the request.
+
+- **Custom Error Messages:**  
+  Create a custom error handler middleware to improve error responses.
+
+Let me know if you need any further assistance!

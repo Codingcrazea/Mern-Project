@@ -1,0 +1,9 @@
+Use image link svg extension file :
+
+How import statement works:
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+_______________________
+Start form empty folder , do not create 

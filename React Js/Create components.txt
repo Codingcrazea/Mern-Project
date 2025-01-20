@@ -1,0 +1,71 @@
+Javascript code in Html :
+
+{   }
+
+
+In App js under return write element code 
+
+Button:
+Create a function that return markup of button 
+
+and in default export app write name of function as element 
+function MyButton() {
+  return (
+    <button>
+      I'm a button
+    </button>
+  );
+}
+
+export default function MyApp() {
+  return (
+    <div>
+      <h1>Welcome to my app</h1>
+      <MyButton />
+    </div>
+  );
+}
+
+In index.js file : 
+
+Create element and render it .
+const myElement = React.createElement('h1', {}, 'I do not use JSX!');
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(myElement);
+
+
+Create component by class : 
+
+Class App extends React.Component{
+
+render() { // Inside render method's return statement html code is written  
+  return <> 
+
+
+  </>
+}
+
+}
+
+export default App
+
+
+class App extends Component{
+  render(){
+
+    var name = "Sanskar Jaiswal";
+    var arr = [10,20,30,40,50,60,70];
+    return <>
+    
+    <h1>Hello This is </h1>
+    <h2>Arr {arr.length}</h2>
+    {arr.map((e)=>{
+          return <b>{e} <br/></b>;
+    })
+    }
+    
+    </>
+  }
+}
+export default App

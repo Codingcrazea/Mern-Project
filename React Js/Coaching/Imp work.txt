@@ -1,0 +1,3 @@
+put condition where check whether user has to redirect to login page or to dashboard 
+
+Check cookie , or check user length in redux / slice .jsx file if its length is not zero then put user credentials and tell send to dashboard 

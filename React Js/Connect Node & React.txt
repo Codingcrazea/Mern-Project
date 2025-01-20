@@ -1,0 +1,85 @@
+MAIN SUCESSFUL CODE : 
+
+In Backend : index.js or any file 
+set route :
+app.get("/getdata",(req,res)=>{
+    res.send("Hello data is reerved");
+});
+
+In Frontend : recieve data \
+import axios from "axios";   // app name will axios only 
+
+Inside function : 
+const [data,setData] = useState("");
+    const getData = async ()=>{
+        const response = await axios.get("http://localhost:5000/getdata");
+        setData(response.data);    
+Or    setData(JSON.stringify(response.data));  // we need to convert data into string from json
+
+    }
+    useEffect(()=>{
+        getData()
+    },[]);
+
+In Html use data variable to print(data fetched from api);
+
+
+// Inside data variable recieved data stored.
+
+If response is in form of Json :  Stringify it using JSON class
+const response = await axios.get("http://localhost:5000/getdata");
+        setData(JSON.stringify(response.data));
+
+
+________________________________________
+Create 2 folders one for frontend & one for backend 
+
+Let Server , client folders :
+Server folder : set up node js use npm init - y  command to set package.json
+
+Client : Set up react js here 
+
+Now how to connect :
+
+Work we have to do 
+we send/recieve  data form frontend 
+
+Process : 
+
+In Backend : we send and recieve data 
+In Front end : we send data using either fetch or axios method 
+
+Get : when frontend send req to backend without data and recieves response 
+Post : when frontend send req to backend with data and recieves response
+
+______________________________________________
+In node js folder :  loacalhost 5000: ke agge /api ayega 
+
+myfirst.js file :
+const express = require("express");
+const app = express();
+
+app.get("/api", (req, res) => {  // get method used create an address jaha se send/recieve opertion honge 
+console.log("Connected to React");  // frontend mein bhi /api se hi data detch kiya javega  
+res.json({"users":["user1" , "user4" ,"user5"]}); // /api ki url pe ye response jayega 
+});
+
+const PORT = process.env.PORT || 8080;
+
+app.listen(5000, console.log(`Server started on port 5000`));
+
+
+
+
+________________________________________________
+In react js folder :
+
+Modify these files :
+
+package.json 
+
+"name": "client",
+"version": "0.1.0",
+"proxy":"http://localhost:5000", // at this line add proxy and local server port here 5000 
+
+ 

@@ -1,0 +1,1 @@
+Command : npm create vite@latest app_name

@@ -1,0 +1,43 @@
+2 types of functions are used :
+
+function functionname () {
+
+// In this function this keyword is un defned 
+}
+
+Other : is call back function : 
+
+( number )=> {
+this; // here this is Window object
+}
+
+Refer Advance javascript in Javascript :
+
+Topic name : Classes  
+
+
+Arrow function :use to short syntax : 
+
+Before : 
+hello = function() {
+  return "Hello World!";
+}
+
+hello = () => {
+  return "Hello World!";
+}
+
+
+Arrow Function With Parameters:
+
+hello = (val) => "Hello " + val;
+
+Arrow Function Without Parentheses:
+
+hello = val => "Hello " + val;
+
+About this : in arrow function : 
+
+In regular functions the this keyword represented the object that called the function, which could be the window, the document, a button or whatever.
+
+With arrow functions, the this keyword always represents the object that defined the arrow function.

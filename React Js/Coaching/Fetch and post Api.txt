@@ -1,0 +1,25 @@
+import { useEffect, useState } from "react"
+
+function App1()
+{
+  const[data,setData] = useState({})
+  useEffect(()=>{
+    loadData();
+  },[])
+
+  var loadData = ()=>{
+    
+    fetch("https://jsonplaceholder.typicode.com/todos/1").then(resp=>resp.json())
+       .then((res)=>{  // res variable stores response
+      
+      console.log(typeof res)
+      console.log(res)
+      console.log(JSON.stringify(res))
+
+      setData(res)
+
+    }).catch((err)=>{
+      console.log("Error is : "+err);
+    })
+
+  }

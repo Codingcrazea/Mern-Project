@@ -1,0 +1,25 @@
+Keys used to give unique id to list items
+
+
+Code :
+
+const stringLists = [ 'Peter', 'Sachin', 'Kevin', 'Dhoni', 'Alisa' ];   
+    
+const updatedLists = stringLists.map((strList)=>{   
+    <li key={strList.id}> {strList} </li>;   
+});   
+
+
+
+_____________________________________----___________________________
+
+
+If there are no stable IDs for rendered items, you can assign the item index as a key to the lists. It can be shown in the below example.
+
+Example
+const stringLists = [ 'Peter', 'Sachin', 'Kevin', 'Dhoni', 'Alisa' ];   
+    
+const updatedLists = stringLists.map((strList, index)=>{   
+    <li key={index}> {strList} </li>;   
+});  
+

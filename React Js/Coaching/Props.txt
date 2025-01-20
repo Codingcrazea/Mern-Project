@@ -1,0 +1,22 @@
+Props are data send from parent to child 
+
+Parent is a main class where , other child components are imported in parent app
+
+Props are send using keys  and in child class accessed using a variable props that is passed as an argument in functional component.
+
+In main app : where component rendered : 
+
+<User name="Props"/> from here prop is sended with key name 
+
+Then Actual file is User Component 
+
+function User(props) {
+
+return <>
+   {props.name}
+</>
+} 
+
+
+Props drilling : 
+Here props is passed from parent component to child component > child component

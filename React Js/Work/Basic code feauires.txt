@@ -1,0 +1,30 @@
+Exceuting the expression :
+
+insdie { } : {5+5}
+
+const myElement = <h1>React is {5 + 5} times better with JSX</h1>;
+
+
+________________________________________-------______________
+Display variable :
+
+const x = 5;
+let text = "Goodbye";
+if (x < 10) {
+  text = "Hello";
+}
+
+const myElement = <h1>{text}</h1>;
+
+
+// We an also use ternary expression itself .
+
+Use ternary expressions instead:
+
+Example
+Write "Hello" if x is less than 10, otherwise "Goodbye":
+
+const x = 5;
+
+const myElement = <h1>{(x) < 10 ? "Hello" : "Goodbye"}</h1>;
+

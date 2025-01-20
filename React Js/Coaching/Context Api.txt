@@ -1,0 +1,52 @@
+Process :
+
+In parent app : context object is created and exported   , then data is passed using context,Provider and recieved at destination component 
+using context.Consumer 
+
+Code : 
+Parent app : App
+
+import React, { useState } from 'react'
+import First_Child from './FirstChild'
+
+
+export  var context = React.createContext();
+export default function App1(){
+    const[a,setA] = useState(101);
+    return <>
+    <div>
+       <h1>App 1 Functional Component</h1>
+                
+        <context.Provider value={a}>   // data is passed by value attribute only and inside context provider Child componet is loaded 
+            <First_Child />    
+        </context.Provider>         
+    </div>
+    </>
+}
+
+First Child app 
+
+import S_Child from "./SecondChild"
+export default function F_Child(){
+
+    return <>
+        <h1>First Child </h1>
+        <h2>Data Transfered</h2>
+        <S_Child/>
+
+    </>
+}
+
+Second Child App :
+
+import { context } from "./App1"   // context variable need to be imported in destination component
+export default function S_Child(){
+
+    return <>
+        <h1>Second Child </h1>
+        <context.Consumer>                // this object is used to fetch data 
+            {data=><b>{data}</b>}
+        </context.Consumer>
+        <h2>Data Recieved</h2>
+    </>
+}

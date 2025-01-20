@@ -1,0 +1,27 @@
+Axios used to send data
+
+import axios from "axios";   // app name will axios only 
+
+Used with different methods like get , post , etc.
+
+Rules : 
+Used with async and await 
+
+
+const getData = async ()=>{
+        const response = await axios.get("http://localhost:5000/getdata");
+        setData(response.data);    
+Or    setData(JSON.stringify(response.data));  // we need to convert data into string from json
+
+    }
+    useEffect(()=>{
+        getData()
+    },[]);
+
+
+With post method : 
+Parameters , url and data 
+{
+    var result = axios.post(url,data)
+    return result;
+   }

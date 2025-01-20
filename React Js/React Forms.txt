@@ -1,0 +1,241 @@
+Creating Form
+React offers a stateful, reactive approach to build a form. The component rather than the DOM usually handles the React form. 
+In React, the form is usually implemented by using controlled components.
+
+There are mainly two types of form input in React.
+
+Uncontrolled component
+Controlled component
+
+
+Components of react form :
+
+Text area : used to write decription     
+<textarea>
+  Content of the textarea.
+</textarea>
+
+__________________________________________________________________________
+
+import { useState } from 'react';
+import ReactDOM from 'react-dom/client';
+
+// To submit a form
+// Add a submit button and an event handler in the onSubmit attribute:
+
+
+function MyForm() {
+  const [name, setName] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(`The name you entered was: ${name}`)
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>Enter your name:
+        <input 
+          type="text" 
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <input type="submit" />
+    </form>
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+Handle Multiple inputs 
+
+import { useState } from 'react';
+import ReactDOM from 'react-dom/client';
+
+function MyForm() {
+  const [inputs, setInputs] = useState({});
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs(values => ({...values, [name]: value}))
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(inputs);
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>Enter your name:
+      <input 
+        type="text" 
+        name="username" 
+        value={inputs.username || ""} 
+        onChange={handleChange}
+      />
+      </label>
+      <label>Enter your age:
+        <input 
+          type="number" 
+          name="age" 
+          value={inputs.age || ""} 
+          onChange={handleChange}
+        />
+        </label>
+        <input type="submit" />
+    </form>
+  )
+}
+
+
+_________________________________________________________________________________
+
+Code :
+
+ Example of Uncontrolled component :
+
+In this example, the code accepts a field username and company name in an uncontrolled component.
+
+import React, { Component } from 'react';  
+class App extends React.Component {  
+  constructor(props) {  
+      super(props);  
+      this.updateSubmit = this.updateSubmit.bind(this);  
+      this.input = React.createRef();  
+  }  
+  updateSubmit(event) {  
+      alert('You have entered the UserName and CompanyName successfully.');  
+      event.preventDefault();  
+  }  
+  render() {  
+    return (  
+      <form onSubmit={this.updateSubmit}>  
+        <h1>Uncontrolled Form Example</h1>  
+        <label>Name:  
+            <input type="text" ref={this.input} />  
+        </label>  
+        <label>  
+            CompanyName:  
+            <input type="text" ref={this.input} />  
+        </label>  
+        <input type="submit" value="Submit" />  
+      </form>  
+    );  
+  }  
+}  
+export default App;  
+
+
+____________________________________________________________________________
+
+Controlled Component code example :
+
+A controlled component takes its current value through props and notifies the changes through 
+callbacks like an onChange event. A parent component "controls" this changes by handling the callback and managing its own state and then passing the new values as props to the controlled component. It is also called as a "dumb component."
+
+
+
+
+Code :
+
+import React, { Component } from 'react';  
+class App extends React.Component {  
+  constructor(props) {  
+      super(props);  
+      this.state = {value: ''};  
+      this.handleChange = this.handleChange.bind(this);  
+      this.handleSubmit = this.handleSubmit.bind(this);  
+  }  
+  handleChange(event) {  
+      this.setState({value: event.target.value});  
+  }  
+  handleSubmit(event) {  
+      alert('You have submitted the input successfully: ' + this.state.value);  
+      event.preventDefault();  
+  }  
+  render() {  
+      return (  
+          <form onSubmit={this.handleSubmit}>  
+            <h1>Controlled Form Example</h1>  
+            <label>  
+                Name:  
+                <input type="text" value={this.state.value} onChange={this.handleChange} />  
+            </label>  
+            <input type="submit" value="Submit" />  
+         </form>  
+      );  
+  }  
+}  
+export default App;  
+
+
+__________________________________________________________________________
+
+Handling multiple inputs in conyrolled components :
+
+If you want to handle multiple controlled input elements, add a name attribute to each element, and then the handler function decided what to do based on the value of event.target.name.
+
+Code :
+
+import React, { Component } from 'react';  
+class App extends React.Component {  
+    constructor(props) {  
+        super(props);  
+        this.state = {  
+            personGoing: true,  
+            numberOfPersons: 5  
+        };  
+        this.handleInputChange = this.handleInputChange.bind(this);  
+   }  
+   handleInputChange(event) {  
+       const target = event.target;  
+       const value = target.type === 'checkbox' ? target.checked : target.value;  
+       const name = target.name;  
+       this.setState({  
+           [name]: value  
+       });  
+  }  
+  render() {  
+      return (  
+          <form>  
+              <h1>Multiple Input Controlled Form Example</h1>  
+              <label>  
+                  Is Person going:  
+                  <input  
+                    name="personGoing"  
+                    type="checkbox"  
+                    checked={this.state.personGoing}  
+                    onChange={this.handleInputChange} />  
+             </label>  
+             <br />  
+             <label>  
+                 Number of persons:  
+                 <input  
+                 name="numberOfPersons"  
+                 type="number"  
+                 value={this.state.numberOfPersons}  
+                 onChange={this.handleInputChange} />  
+             </label>  
+         </form>  
+     );  
+  }  
+}  
+export default App;  
+
+
+
+_________________________________________________________________________
+
+

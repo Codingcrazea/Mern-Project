@@ -1,0 +1,17 @@
+In App.js file :
+
+html code needs to be wrapped with <> </>
+
+Input field is <input  />  must end with />
+
+__________________________________________
+Install loader : To load appropriate files
+npm install babel-loader@8.0.4  
+___________________________
+Css : 
+There are two css files : App.css and index.css file 
+
+To displace items from center , go to index.css files and remove 
+place-items : center; 
+
+

@@ -1,0 +1,33 @@
+Files names and uses : 
+
+node_modules : contain packages 
+Most basic : 
+.gitignore : work when we push our project to github  control what to display and not 
+package .json : have packages that are used if
+Imp when we want to update node modules then package.json and package-lock .json will also update.
+
+README .md : show about basic structions and we have to update this while posting on github  
+
+
+_________________________________________________
+public folder : contain assests file like logo , robot.txt
+
+index.html : contain html element ###(specially div element with id root )### that will be controlled by javascript in src folder files App 
+
+_______________________________________________________________
+src : 
+Here we put react components : propmp and  
+
+Both file run with combination 
+App.js : this is file that create app elements ##### In this file we have make changes Most work done by this .
+
+Index .js :  This file will rener components in App .js file and ### In this file root element will be 
+controlled & manipulated 
+
+
+const root = ReactDOM.createRoot(document.getElementById('root')); element with id root has been updated 
+root.render(
+  <React.StrictMode>
+    <App />              App component has been rendered into element with id root 
+  </React.StrictMode>
+);

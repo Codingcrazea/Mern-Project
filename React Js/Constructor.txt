@@ -1,0 +1,97 @@
+The constructor is a method used to initialize an object's state in a class. It automatically called during the creation of an object in a class.
+
+The concept of a constructor is the same in React. The constructor in a React component is called before the component is 
+mounted. When you implement the constructor for a React component, you need to call super(props) method before 
+any other statement. If you do not call super(props) method, this.props will be undefined in the constructor and can lead to bugs.
+
+
+
+
+You cannot call setState() method directly in the constructor(). 
+
+
+
+
+
+
+If the component needs to use local state, you need directly to use 'this.state' to assign the initial state in the constructor. The constructor only uses this.state to assign initial state, and all other methods need to use set.state() method.
+
+Points :
+
+
+Is it necessary to have a constructor in every component?
+It is necessary to call Super() inside a constructor 
+
+__________________________________________________________________
+
+
+
+Code : 
+
+import React, { Component } from 'react';  
+  
+class App extends Component {  
+  constructor(props){  
+    super(props);  
+    this.state = {     // this.state is an object 
+         data: 'www.javatpoint.com'  
+      }  
+    this.handleEvent = this.handleEvent.bind(this);  
+  }  
+  handleEvent(){  
+    console.log(this.props);  
+  }  
+  render() {  
+    return (  
+      <div className="App">  
+    <h2>React Constructor Example</h2>  
+    <input type ="text" value={this.state.data} />  
+        <button onClick={this.handleEvent}>Please Click</button>  
+      </div>  
+    );  
+  }  
+}  
+export default App;  
+
+Here we had created a module :
+
+
+
+Then 
+
+
+Main.js
+
+import React from 'react';  
+import ReactDOM from 'react-dom';  
+import App from './App.js';  
+  
+ReactDOM.render(<App />, document.getElementById('app'));  
+
+
+example : 
+
+class App extends Component{
+  constructor(){
+    super();
+    this.state = {x:100,y:200}
+  }
+  
+  render(){
+
+    var name = "Sanskar Jaiswal";
+    var arr = [10,20,30,40,50,60,70];
+    return <>
+    <img src={reactLogo} ></img>
+    <h1>Hello This is </h1>
+    <h2>Arr {arr.length}</h2>
+    {arr.map((e)=>{
+          return <b>{e} <br/></b>;
+    })
+    }
+    <h1>Product {this.state.x*this.state.y}  </h1>
+    
+    </>
+  }
+}
+export default App

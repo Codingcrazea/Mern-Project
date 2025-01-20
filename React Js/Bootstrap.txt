@@ -1,0 +1,256 @@
+Refer link : https://react-bootstrap.netlify.app/docs/components/navbar
+Google search : React Bootstrap
+
+npm install react-bootstrap bootstrap
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+
+
+We can directly use of bootstrap element 
+
+import Button from 'react-bootstrap/Button';
+
+<Button> Button </Button>
+
+Use multiple elements : 
+import {Button ,Navbar } from 'react-bootstrap';
+
+Tips : 
+Special attribute : 
+Classname : mx -2 // letter spacing 
+For Forms : Form.Group as={Col} md="4"  to short field size   md sets size 
+
+Use Validate message : below field where we want to show message 
+<Form.Control.Feedback type="invalid">
+                                Please use a valid email
+                            </Form.Control.Feedback>   
+
+
+Increase letter space  : mx-2  // 2 can be increased  for margin also  
+
+
+
+How to use Custom colors  : 
+In Bootstarp : reach bootsrap folder > scss > _variable.scss
+That contains default value of color stored in variable 
+
+In React Bootstrap : 
+We have to override default theme variables 
+Create a custom.scss file in src folder 
+
+Set new values to variables that  were used 
+$primary : 
+$secondary 
+$dark :
+$light , success , info , warning , danger 
+
+Theming & Customizing 
+use variant attribute 
+<style type="text/css">
+        {`
+    .btn-flat {
+      background-color: purple;
+      color: white;
+    }
+
+    .btn-xxl {
+      padding: 1rem 1.5rem;
+      font-size: 1.5rem;
+    }
+    `}
+      </style>
+
+      <Button variant="flat" size="xxl">
+        flat button
+      </Button>
+
+
+Navbar :
+first import elements  :
+import { Navbar, Nav, Container, NavDropdown ,Carousel,Button}
+ 
+     <Navbar expand="lg" className="bg-body-primary">
+      <Container>
+        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#link">Link</Nav.Link>
+            <NavDropdown title="News" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link className="h_login" href="/contact">Login</Nav.Link>
+            <Nav.Link className="h_register" href="/contact">Register</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+    
+
+Carousal : 
+<Carousel>
+      <Carousel.Item>
+        <img className="first_slide" 
+        src="public\logo512.png"
+        alt="first_slide"/>
+        <Carousel.Caption>
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        
+        <Carousel.Caption>
+          <h3>Second slide label</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        
+        <Carousel.Caption>
+          <h3>Third slide label</h3>
+          <p>
+            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+          </p>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
+
+______________________________________________________________________
+Grid : 
+
+<Container>
+      <Row>
+        <Col>1 of 1  // Put <Outlet/> at end 
+<div class="col_1">
+                            <div class="img-wrap" itemprop="image">
+                                <img src={Fcol2} alt="courses picture" />
+                            </div>
+                            <Link to="/contact" class="learn-desining-banner" itemprop="name">Learn Web Designing</Link>
+                            <div class="box-body" itemprop="description">
+                                <p>some words</p>
+                                <section itemprop="time">
+                                    <p><span>Duration:</span> 4 Years</p>
+                                    <p><span>Class Time:</span> session</p>
+                                    <p><span>Fee:</span> as per cources</p>
+                                </section>
+                            </div>
+                        </div>
+
+
+
+
+
+</Col>
+      </Row>
+    </Container>
+
+
+______________________________________________________________________________
+Form Validation :
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Row from 'react-bootstrap/Row';
+
+function FormExample() {
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
+  return (
+    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Row className="mb-3">
+        <Form.Group as={Col} md="4" controlId="validationCustom01">
+          <Form.Label>First name</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            placeholder="First name"
+            defaultValue="Mark"
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group as={Col} md="4" controlId="validationCustom02">
+          <Form.Label>Last name</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            placeholder="Last name"
+            defaultValue="Otto"
+          />
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+          <Form.Label>Username</Form.Label>
+          <InputGroup hasValidation>
+            <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+            <Form.Control
+              type="text"
+              placeholder="Username"
+              aria-describedby="inputGroupPrepend"
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              Please choose a username.
+            </Form.Control.Feedback>
+          </InputGroup>
+        </Form.Group>
+      </Row>
+      <Row className="mb-3">
+        <Form.Group as={Col} md="6" controlId="validationCustom03">
+          <Form.Label>City</Form.Label>
+          <Form.Control type="text" placeholder="City" required />
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid city.
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group as={Col} md="3" controlId="validationCustom04">
+          <Form.Label>State</Form.Label>
+          <Form.Control type="text" placeholder="State" required />
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid state.
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group as={Col} md="3" controlId="validationCustom05">
+          <Form.Label>Zip</Form.Label>
+          <Form.Control type="text" placeholder="Zip" required />
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid zip.
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Row>
+      <Form.Group className="mb-3">
+        <Form.Check
+          required
+          label="Agree to terms and conditions"
+          feedback="You must agree before submitting."
+          feedbackType="invalid"
+        />
+      </Form.Group>
+      <Button type="submit">Submit form</Button>
+    </Form>
+  );
+}
+
+export default FormExample;

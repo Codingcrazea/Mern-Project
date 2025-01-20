@@ -1,0 +1,4 @@
+Types of event : 
+OnClick 
+OnFocus : when data is changed 
+OnBlur : when other field is selected 

@@ -1,0 +1,1 @@
+In React, you specify a CSS class with className.

@@ -1,0 +1,121 @@
+See work in html file 
+
+Install react-router-dom  : npm install react-router-dom 
+
+Tips : use Link element instead of anchor tag 
+
+In Index.JS :
+
+We have to enclose Restricr App in BrowserRouter element 
+import { BrowserRouter } from 'react-router-dom';
+
+<BrowserRouter>
+  <React.StrictMode>
+    <Contact />
+    <App/>
+  </React.StrictMode>
+</BrowserRouter>
+
+
+App js : This file or any other file jisme    se Dusre page par redirect karna hai 
+App.js mein jo content routes ke bahar likha hai wo change nahi hota hai 
+
+
+Routes element se redirect karne pe url bar 
+mein path dalne pe page khulega 
+
+import React from 'react';
+import Contact from './contact';
+
+import { Routes,Route ,Redirect} from 'react-router-dom';
+import './App.css';
+
+function App() {
+  return (<>
+  
+  <h1>Hello</h1>
+  <Routes>
+    
+    <Route path='/contact' element={<Contact/>}  />  element ko end karna jaruri hai 
+    
+   </Routes>
+  
+  
+  </>);    
+}
+
+
+Button click pe page redirect karne    <Route element se path set karna hoga aur us path se kis page pe redirect hona hai 
+wo bhi dekhna hai 
+
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+function Home(){
+
+    const navigate = useNavigate();
+    const handleClick = e => {
+    e.preventDefault();
+    navigate('/home');
+  }
+
+    return(<>
+      <button onClick={handle}> click here</button>
+    </>)
+}
+export default Home;
+
+
+One another thing :
+
+<Navigate to="/path defined in route element nest " />  
+
+_________________________
+ 
+
+
+2 ways are given 
+
+
+1. First create an / render an html page inside a function or class called component
+
+Component banega js file mein and      waha se export karna hai ek js file mein 1 
+hi export ho sakta hai har html ke liye new js file banao
+libraries import karke.
+ 
+
+Index .js mein import hoga aur redirect hoga 
+
+Then Component ki file mein bhi  <Outlet> and <Link> elements. add karne hote hai
+
+For using in our template 
+import Link and Outlet in custom html component
+import { Outlet, Link } from "react-router-dom";
+
+Then in navigation div use <Link element instead of <a href 
+
+<Link className='active' to="/"><i class="fa fa-fw fa-home"></i>Sanskar</Link> we can put class and do css 
+
+Put <Outlet/> at end of codes 
+
+
+
+
+
+Example Explained
+We wrap our content first with <BrowserRouter>.
+
+Then we define our <Routes>. An application can have multiple <Routes>. Our basic example only uses one.
+
+<Route>s can be nested. The first <Route> has a path of / and renders the Layout component.
+
+/ adds with path so path = blog becomes /blogs
+
+The nested <Route>s inherit and add to the parent route. So the blogs path is combined with the parent and becomes /blogs.
+
+The Home component route does not have a path 
+but has an index attribute. That specifies this route as the default route for the parent route, which is /.
+
+Setting the path to * will act as a catch-all for any undefined URLs. This is great for a 404 error page.
+
+

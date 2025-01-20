@@ -1,0 +1,182 @@
+Pre-requisite for ReactJS / Install all this to work on react js
+
+refer create app file 
+
+NodeJS and NPM
+React and React DOM
+Webpack
+Babel
+
+Install only if required
+
+
+We can direcy use npm create-reacy-app appname 
+
+Ot will install required modules 
+
+Vs Code Extension :
+
+Thunder Clint to test Api 
+ES7 React/Redux... : auto complete react codes 
+Bracket Pair colouriser : Color brackets to know about bracket Pair
+Live Server : to run app from vs code 
+
+
+React latest version : 
+
+To install the latest version, from your project folder run the following from the terminal:
+
+npm i react@latest react-dom@latest
+
+Step2 : 
+
+Use the new root API
+In order to take advantage of React 18's concurrent features you'll need to use the new root API for client rendering.
+
+// Before
+import ReactDOM from 'react-dom';
+ReactDOM.render(<App />, document.getElementById('root'));
+
+// After
+import ReactDOM from 'react-dom/client';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+___________________________________________________________
+There are two ways to set up an environment for successful ReactJS application. They are given below.
+
+Using the npm command
+Using the create-react-app command
+
+Using  npm :
+
+Create a root folder to store react app
+
+ To create any module, it is required to generate a package.json file 
+in the project folder. To do this, you need to run the 
+following command as shown in the below image.
+
+
+npm init -y  // this command will automatically create package.json file 
+
+and with data.
+{
+   "name" : "reactApp",
+    "version": "1.0.0",
+    "description" : " ",
+    "main" : "index.js",
+    "scripts": {
+       "test" : "echo \"Errors : no test specified\ " && exit 1 } ,
+     "keywords" : [ ] ,
+     "author" :" " , 
+     "license" : "ISC"
+
+}
+
+
+After creating a package.json file, you need to install react and its 
+DOM packages using the following npm command in the 
+terminal window as shown in the below image.
+
+npm install react react-dom --save 
+
+also we can run commands seperately :
+
+npm install react --save  
+npm install react-dom --save 
+
+
+
+Install webpack :
+
+Webpack is used for module packaging, development, and production 
+pipeline automation. We will use webpack-dev-server during development, webpack to create production builds, and webpack CLI provides a set of commands. Webpack compiles these into a single file(bundle). 
+To install webpack use the command shown in the below image.
+
+
+
+
+npm install webpack webpack-dev-server webpack-cli --save  
+
+ 
+
+Seperate commands :
+
+npm install webpack --save  
+npm install webpack-dev-server --save  
+npm install webpack-cli --save   
+
+
+Install Babel
+
+Babel is a JavaScript compiler and transpiler used to convert 
+one source code to others. It compiles React JSX and ES6 to ES5 JavaScript 
+which can be run on all browsers. 
+
+We need babel-loader for JSX file types, babel-preset-react makes your browser
+ update automatically when any changes occur to your code without losing the 
+current state of the app. 
+
+ES6 support requires babel-preset-env Babel preset. 
+
+To install webpack 
+use the following command shown in the below image.
+
+
+
+  
+npm install babel-loader --save-dev  
+npm install babel-preset-env --save-dev  
+npm install babel-preset-react --save-dev  
+npm install babel-webpack-plugin --save-dev  
+
+
+
+We need to create files :
+
+index.html, App.js, main.js, webpack.config.js and, (dot).babelrc.
+
+
+___________________________________________________________
+Then we need to configure webpack
+
+You can configure webpack in the webpack.config.js file by 
+adding the following code.
+
+Expalnation : Code will defines your app entry point, 
+build output and the extension which will resolve automatically.
+development server to 8080 port.
+
+
+const path = require('path');  
+const HtmlWebpackPlugin = require('html-webpack-plugin');  
+  
+module.exports = {  
+   entry: './main.js',  
+   output: {  
+      path: path.join(__dirname, '/bundle'),  
+      filename: 'index_bundle.js'  
+   },  
+   devServer: {  
+      inline: true,  
+      port: 8080  
+   },  
+   module: {  
+      rules: [  
+         {  
+            test: /\.jsx?$/,  
+            exclude: /node_modules/,  
+        use: {  
+              loader: "babel-loader",  
+            }  
+         }  
+      ]  
+   },  
+   plugins:[  
+      new HtmlWebpackPlugin({  
+         template: './index.html'  
+      })  
+   ]  
+}  
+
+_______________________________________________________________________________

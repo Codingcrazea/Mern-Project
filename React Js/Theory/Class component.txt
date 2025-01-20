@@ -1,0 +1,179 @@
+Constructor is manadatory 
+
+Sure! React class components are an older way of writing components in React. They extend the `React.Component` class and use lifecycle methods to manage component behavior.
+
+### Concept of Class Components in React
+
+Class components can hold and manage their own state and lifecycle methods. They are particularly useful when you need to manage state or need to use lifecycle methods.
+
+### Basic Structure of a Class Component
+
+```jsx
+import React, { Component } from 'react';
+
+class MyComponent extends Component {
+    constructor(props) {
+        super(props);
+        // Initialize state
+        this.state = {
+            count: 0
+        };
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>Count: {this.state.count}</h1>
+                <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+                    Increment
+                </button>
+            </div>
+        );
+    }
+}
+
+export default MyComponent;
+```
+
+
+
+
+
+### List of Methods Used in Class Components
+this.setState( ) // used to change data in state object created in conctructor 
+
+How  :
+this.setState({attribute:new_vale  } ) // we can change single values also 
+
+
+1. **`constructor(props)`**
+   - Initializes the component's state and binds methods. It's called before the component is mounted.
+   ```jsx
+   constructor(props) {
+       super(props);
+       this.state = { count: 0 };
+   }
+   ```
+
+2. **`render()`**
+   - The only required method in a class component. It returns the JSX to be rendered.
+   ```jsx
+   render() {
+       return (
+           <div>
+               <h1>Hello, World!</h1>
+           </div>
+       );
+   }
+   ```
+
+3. **`componentDidMount()`**
+   - Invoked immediately after a component is mounted. Ideal for initiating API calls, setting up subscriptions, or other side effects.
+   ```jsx
+   componentDidMount() {
+       console.log('Component has mounted');
+   }
+   ```
+
+4. **`componentDidUpdate(prevProps, prevState)`**
+   - Called immediately after updating occurs. It can be used to operate on the DOM when the component has been updated.
+   ```jsx
+   componentDidUpdate(prevProps, prevState) {
+       if (this.state.count !== prevState.count) {
+           console.log('Count has changed');
+       }
+   }
+   ```
+
+5. **`componentWillUnmount()`**
+   - Called immediately before a component is destroyed. Perform any necessary cleanup in this method, such as invalidating timers, canceling network requests, or cleaning up subscriptions.
+   ```jsx
+   componentWillUnmount() {
+       console.log('Component is about to be unmounted');
+   }
+   ```
+
+6. **`shouldComponentUpdate(nextProps, nextState)`**
+   - Determines if a component should re-render. By default, it returns `true`. Use it to optimize rendering performance.
+   ```jsx
+   shouldComponentUpdate(nextProps, nextState) {
+       return this.state.count !== nextState.count;
+   }
+   ```
+
+7. **`static getDerivedStateFromProps(nextProps, prevState)`**
+   - Called right before calling the render method, both on the initial mount and on subsequent updates. It should return an object to update the state, or `null` to update nothing.
+   ```jsx
+   static getDerivedStateFromProps(nextProps, prevState) {
+       if (nextProps.someValue !== prevState.someValue) {
+           return { someValue: nextProps.someValue };
+       }
+       return null;
+   }
+   ```
+
+8. **`componentDidCatch(error, info)`**
+   - Error boundary method to catch errors in any components below them in the component tree and log those errors, display a fallback UI, etc.
+   ```jsx
+   componentDidCatch(error, info) {
+       console.error("Error caught:", error, info);
+   }
+   ```
+
+### Example with Lifecycle Methods
+
+Here’s an example that demonstrates several lifecycle methods:
+
+```jsx
+import React, { Component } from 'react';
+
+class LifecycleDemo extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: null
+        };
+        console.log('Constructor');
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        console.log('getDerivedStateFromProps');
+        return null;
+    }
+
+    componentDidMount() {
+        console.log('ComponentDidMount');
+        // Simulate an API call
+        setTimeout(() => {
+            this.setState({ data: 'Hello, World!' });
+        }, 2000);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('shouldComponentUpdate');
+        return true;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('ComponentDidUpdate');
+    }
+
+    componentWillUnmount() {
+        console.log('ComponentWillUnmount');
+    }
+
+    render() {
+        console.log('Render');
+        return (
+            <div>
+                <h1>{this.state.data || 'Loading...'}</h1>
+            </div>
+        );
+    }
+}
+
+export default LifecycleDemo;
+```
+
+In this example, various lifecycle methods are logged to the console to illustrate the order in which they are called. 
+The component fetches data after it mounts and updates its state, triggering re-rendering.

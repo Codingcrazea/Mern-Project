@@ -1,0 +1,3 @@
+Fisrt copy node_modules file of 
+frontend and backend and then copy package.json 
+and package-lock.json for proper suggestion
