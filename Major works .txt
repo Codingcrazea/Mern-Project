@@ -1,0 +1,84 @@
+Responding to events 
+You can respond to events by declaring event handler functions inside your components:
+
+function MyButton() {
+  function handleClick() {
+    alert('You clicked me!');
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Click me
+    </button>
+  );
+}
+
+____________________________________________________________
+
+Updating the screen 
+Often, you’ll want your component to “remember” some information and display it. For example, maybe you want to count the number of times a button is clicked. To do this, add state to your component.
+
+First, import useState from React:
+
+import { useState } from 'react';
+Now you can declare a state variable inside your component:
+
+function MyButton() {
+  const [count, setCount] = useState(0);
+  // ...
+You’ll get two things from useState: the current state (count), and the function that lets you update it (setCount). You can give them any names, but the convention is to write [something, setSomething].
+
+The first time the button is displayed, count will be 0 because you passed 0 to useState(). When you want to change state, call setCount() and pass the new value to it. Clicking this button will increment the counter:
+
+function MyButton() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Clicked {count} times
+    </button>
+  );
+}
+
+________________________________________________________________
+Using hooks : 
+
+________________________________________________________
+Fetch data for api / fetch api :
+
+Code inside function 
+
+import React,{useEffect ,useState} from 'react/';
+
+useEffect(()=>{
+  fetch("/api").then(  // this function fetch data on page /api 
+    response=> response.json() // response variable stored that fetched data
+  ).then(
+    data => {
+      setdata(data) // set data vriable mein doni store ho jayega 
+    }
+  )
+},[])
+
+_____________________
+
+also :
+const aptget = () {
+  fetch('url') .then((response) => response.json))
+  .then((json) => 
+         console.log(json)
+         
+}
+const aptget = () {
+  fetch('url') .then((response) => response.json))
+  .then((json) => {
+          console.log(json);
+          setData(json);
+}
+
+
+Class

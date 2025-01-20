@@ -1,0 +1,17 @@
+To remove warning run command :
+npm audit fix --force
+
+React must be in scope solution :
+
+import React from 'react/';
+
+___________________________________
+Multiple modulles with same name error :  Solution : install a package npm i react-particles
+in file where routes are set 
+
+import Particles from'react-particles';
+<Particles></Particles> 
+
+
+React scripts : not recognized  as a command .
+When we move project than it occurs , simply install react scripts again , npm install react-scripts --save

@@ -1,0 +1,15 @@
+How do you ensure security in a fullstack application?**
+   - Implement HTTPS, use environment variables for sensitive data, validate and sanitize user inputs, use authentication and authorization 
+mechanisms (e.g., JWT), and protect against common vulnerabilities (e.g., SQL Injection, XSS).
+
+7. **Explain the concept of RESTful APIs.**
+   - RESTful APIs adhere to the principles of Representational State Transfer (REST), which include using HTTP methods (GET, POST, PUT, DELETE) to 
+interact with resources, stateless interactions, and structured URLs for resource endpoints.
+
+8. **How do you handle user authentication and authorization in a MERN stack application?**
+   - Use JSON Web Tokens (JWT) or session-based authentication. JWTs are often used to verify user identity and manage sessions. 
+Implement middleware in Express.js to check for valid tokens and handle authorization based on user roles or permissions.
+
+9. **What are some common performance optimization techniques for a MERN stack application?**
+   - Implement server-side caching, use indexing in MongoDB, optimize React rendering with `React.memo` and `useMemo`, 
+enable gzip compression, and use lazy loading for components and routes.

@@ -1,0 +1,75 @@
+ If you've previously installed create-react-app globally, it is recommended that you uninstall the package to ensure npx always uses the latest version of create-react-app.
+
+Install node from google first to install npm 
+
+To uninstall, run this command: npm uninstall -g create-react-app.
+
+install globally creae react js project 
+npm install -g create-react-app
+
+Commands to create react app 
+
+create by regular 
+1. create-react-app app_name 
+    run : npm start     
+
+
+2. npm create vite@latest app_name 
+      select > react then select > Js
+
+    cd app_name 
+    npm install
+
+     run : npm run dev  
+
+
+_______________________________________________________________
+Step 1: very first step 
+
+Run command with npx prefix to install one time 
+
+This will create react dependencies for app
+npx create-react-app react-demo   --use-npm for 
+
+or npm install create-react-app app_name
+
+We can use two package managers npm and npx 
+npm installes files permenantly while while npx install for one time only 
+
+
+// Here react demo is app name we can use any 
+
+Explain : If we use npm then it will install globally and if we use npx then for only 
+particular app.
+
+after process upto 1 min : react-demo folder wil be created 
+
+
+Step 2 : Move to app directory :
+Then run 
+npm start   command in react-demo directory in terminal.
+For server start
+
+Step 3 : 
+
+A new browser window will pop up with your newly created React App! 
+If not, open your browser and type localhost:3000 in the address bar.
+
+If we had used with npm then uninstall by command 
+if we want npx  
+npm uninstall -g create-react-app.
+_____________________________________________
+In App.js file we can reaplace given content by our content inside
+ the <div className="App"> with a <h1> element.
+
+__________________________________________________________________________
+In Index.js file :
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
+const myFirstElement = <h1>Hello React!</h1>
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(myFirstElement);
+
+________________________________________________________________

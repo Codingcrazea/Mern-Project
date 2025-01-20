@@ -1,0 +1,51 @@
+Refer React js docs
+
+React Js is front end library 
+
+Why we use ReactJS?
+
+
+The main objective of ReactJS is to develop User Interfaces (UI) that improves the speed of the apps. 
+It uses virtual DOM (JavaScript object), which improves the 
+performance of the app. 
+
+The JavaScript virtual DOM is faster than the regular DOM. 
+We can use ReactJS on the client and server-side as well as with other frameworks. 
+It uses component and data patterns that improve readability and helps to maintain larger apps.
+
+We can import module using import function
+
+We can use two package managers npm and npx 
+
+npm installes files permenantly while while npx install for one time only 
+
+We can either use react direct in html and create reactApp
+
+
+
+render method of React Dom render html codes .
+Like this :
+
+ReactDOM.render(<App />, document.getElementById('app'));
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+const ele = React.createElement('h1','{}',"Jai");
+root.render(
+  
+  
+<React.StrictMode>
+  { <App />  }
+</React.StrictMode>
+);
+
+
+
+
+
+Render html code : 
+Create element = 
+
+const myElement = React.createElement('h1', {}, 'I do not use JSX!');
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(myElement);

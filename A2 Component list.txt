@@ -1,0 +1,137 @@
+Theory :
+In this approach, the entire application is divided into a small logical group of code, which is known as components.
+
+A Component is considered as the core building blocks of a React application. It makes the task of building UIs much easier. Each component exists in the 
+same space, but they work independently from one another and merge all in a parent component, which will be the final UI of your application.
+
+There are two types of Components :
+
+1.Functional Components
+2. Class Components
+
+
+
+
+_____________________________________________________________
+
+Functional Components
+In React, function components are a way to write components that only contain a render method and don't have their own state. 
+
+example  : 
+export deafult function ABC() {
+return(<> 
+
+// html code 
+
+</>  )
+}
+
+They are simply JavaScript functions that may or may not receive data as parameters. 
+We can create a function that takes props(properties) as input and returns what should be rendered. 
+A valid functional component can be shown in the below example.
+
+
+Simply:
+
+Steps :
+
+Import react , Component 
+Create class and render method and inside return ( write html code to print )
+
+Code :
+
+import React, { Component } from 'react';  
+class App extends React.Component {  
+   render() {  
+      return (  
+         <div>  
+            <First/>  
+            <Second/>  
+         </div>  
+      );  
+   }  
+}  
+class First extends React.Component {  
+   render() {  
+      return (  
+         <div>  
+            <h1>JavaTpoint</h1>  
+         </div>  
+      );  
+   }  
+}  
+class Second extends React.Component {  
+   render() {  
+      return (  
+         <div>  
+            <h2>www.javatpoint.com</h2>  
+            <p>This websites contains the great CS tutorial.</p>  
+         </div>  
+      );  
+   }  
+}  
+export default App;  
+
+
+__________________________________________________________________________________
+
+Example
+
+In this example, we are creating the list of unordered elements, where we will dynamically insert StudentName for every object from the data array. 
+
+Here, we are using ES6 arrow syntax (=>) which looks much cleaner than the old JavaScript syntax. 
+It helps us to create our elements with fewer lines of code. 
+
+It is especially useful when we need to create a list with a lot of items.
+
+import React, { Component } from 'react';  
+
+class App extends React.Component {  
+ constructor() {  
+      super();  
+      this.state = {  
+         data:   
+         [  
+            {             
+               "name":"Abhishek"             
+            },  
+            {            
+               "name":"Saharsh"             
+            },  
+            {    
+               "name":"Ajay"          
+            }  
+         ]  
+      }  
+   }  
+   render() {  
+      return (  
+         <div>  
+            <StudentName/>  
+            <ul>            
+                {this.state.data.map((item) => <List data = {item} />)}           
+            </ul>  
+         </div>  
+      );  
+   }  
+}  
+class StudentName extends React.Component {  
+   render() {  
+      return (  
+         <div>  
+            <h1>Student Name Detail</h1>  
+         </div>  
+      );  
+   }  
+}  
+class List extends React.Component {  
+   render() {  
+      return (  
+         <ul>            
+            <li>{this.props.data.name}</li>   
+         </ul>  
+      );  
+   }  
+}  
+export default App;  
+
