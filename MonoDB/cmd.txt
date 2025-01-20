@@ -1,0 +1,10 @@
+mongod --version
+mongosh --version
+==========================================
+mongosh
+=========================================
+show dbs;
+use dbName;
+db.createCollection('collectionName');
+db.collectionName.insertOne({key:value,key:value,--------});
+db.collectionName.find();

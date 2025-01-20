@@ -1,0 +1,77 @@
+=>show dbs;
+admin           40.00 KiB
+config          84.00 KiB
+local           88.00 KiB
+mybatch         72.00 KiB
+mydb           184.00 KiB
+mynode         120.00 KiB
+mynode10_30     72.00 KiB
+mynodeshop     336.00 KiB
+myonlineshop   396.00 KiB
+myproductshop  396.00 KiB
+myshop          40.00 KiB
+pawnshop        40.00 KiB
+=============================================
+test> use node_5;
+switched to db node_5
+==============================================
+node_5> show dbs;
+admin           40.00 KiB
+config          72.00 KiB
+local           88.00 KiB
+mybatch         72.00 KiB
+mydb           184.00 KiB
+mynode         120.00 KiB
+mynode10_30     72.00 KiB
+mynodeshop     336.00 KiB
+myonlineshop   396.00 KiB
+myproductshop  396.00 KiB
+myshop          40.00 KiB
+pawnshop        40.00 KiB
+===================================================
+node_5> db.createCollection('user');
+{ ok: 1 }
+===================================================
+node_5> show dbs;
+admin           40.00 KiB
+config          72.00 KiB
+local           88.00 KiB
+mybatch         72.00 KiB
+mydb           184.00 KiB
+mynode         120.00 KiB
+mynode10_30     72.00 KiB
+mynodeshop     336.00 KiB
+myonlineshop   396.00 KiB
+myproductshop  396.00 KiB
+myshop          40.00 KiB
+node_5           8.00 KiB
+pawnshop        40.00 KiB
+=============================================================
+node_5> show collections;
+user
+=============================================================
+node_5> db.createCollection('student');
+{ ok: 1 }
+==============================================================
+node_5> show collections;
+student
+user
+==============================================================
+node_5> db.user.insertOne({'uid':101,'uname':'Mahi','umobile':'1234567890','username':'mahi@gmail.com','pass':'12345'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('66daf2ab96868d52c7995862')
+}
+=============================================================
+ db.user.find();
+[
+  {
+    _id: ObjectId('66daf2ab96868d52c7995862'),
+    uid: 101,
+    uname: 'Mahi',
+    umobile: '1234567890',
+    username: 'mahi@gmail.com',
+    pass: '12345'
+  }
+]
+=============================================================
