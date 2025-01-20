@@ -1,0 +1,6 @@
+set middleware to
+set path to 
+directory 
+
+app.use('/uploads', express.static('uploads'));
+/uploads is url path and uploads is folder.

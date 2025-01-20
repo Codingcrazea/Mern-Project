@@ -1,0 +1,396 @@
+Steps : 
+Install multer and create a directory uploads to store uploaded file
+set express.json or bodyparser.json middleware 
+Configure multer to storage here we can put limitation 
+add end point code to handle request and upload to multer 
+
+To learn how to upload files and images using Node.js from scratch, follow this stepbystep guide. We'll use the express framework and a middleware library called multer, which is specifically designed for handling multipart/formdata (used for file uploads).
+
+
+
+   
+
+
+multer: Middleware for handling multipart/formdata.
+
+Run:
+bash
+npm install express multer
+
+
+
+
+ Step 3: Set Up Basic Express Server
+Create an index.js file and write the basic server setup:
+javascript
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// Middleware to parse JSON and URLencoded data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.listen(port, () => {
+    console.log(Server is running at http://localhost:${port});
+});
+
+
+Run the server:
+bash
+node index.js
+
+
+
+
+ Step 4: Configure Multer for File Upload
+1. Import multer and configure a storage location:
+   javascript
+const multer = require('multer');
+
+// Configure storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Folder to store uploaded files
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '' + file.originalname); // Add timestamp to file name
+    },
+});
+
+// Initialize multer with storage config
+const upload = multer({ storage });
+   
+
+2. Create an uploads directory to store files:
+   bash
+   mkdir uploads
+   
+
+
+
+ Step 5: Create a File Upload Endpoint
+Add a route to handle file uploads:
+javascript
+// Single file upload
+app.post('/upload', upload.single('file'), (req, res) => {
+    try {
+        res.status(200).send({
+            message: 'File uploaded successfully',
+            file: req.file, // File details
+        });
+    } catch (error) {
+        res.status(400).send({ message: 'Error uploading file', error });
+    }
+});
+
+
+
+
+ Step 6: Test File Upload
+1. Start the server:
+   bash
+   node index.js
+   
+
+2. Use Postman or any API testing tool:
+    Method: POST
+    URL: http://localhost:3000/upload
+    Body: Select "formdata" and add a key file with a file as the value.
+
+3. Verify the file is stored in the uploads folder.
+
+
+
+ Step 7: Enable Multiple File Uploads (Optional)
+To upload multiple files, use upload.array():
+javascript
+// Multiple file upload
+app.post('/uploadmultiple', upload.array('files', 5), (req, res) => {
+    try {
+        res.status(200).send({
+            message: 'Files uploaded successfully',
+            files: req.files, // Array of file details
+        });
+    } catch (error) {
+        res.status(400).send({ message: 'Error uploading files', error });
+    }
+});
+
+
+Here:
+ 'files': The key for files in the request.
+ 5: Maximum number of files to upload.
+
+
+
+ Step 8: Serving Uploaded Files
+You can serve uploaded files using the builtin middleware in express:
+javascript
+app.use('/uploads', express.static('uploads'));
+
+// Example: Access files at http://localhost:3000/uploads/<filename>
+
+
+
+
+ Complete index.js Code
+javascript
+const express = require('express');
+const multer = require('multer');
+const app = express();
+const port = 3000;
+
+// Configure storage for multer
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '' + file.originalname);
+    },
+});
+
+const upload = multer({ storage });
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static('uploads'));
+
+// Routes
+app.post('/upload', upload.single('file'), (req, res) => {
+    try {
+        res.status(200).send({
+            message: 'File uploaded successfully',
+            file: req.file,
+        });
+    } catch (error) {
+        res.status(400).send({ message: 'Error uploading file', error });
+    }
+});
+
+app.post('/uploadmultiple', upload.array('files', 5), (req, res) => {
+    try {
+        res.status(200).send({
+            message: 'Files uploaded successfully',
+            files: req.files,
+        });
+    } catch (error) {
+        res.status(400).send({ message: 'Error uploading files', error });
+    }
+});
+
+// Start server
+app.listen(port, () => {
+    console.log(Server is running at http://localhost:${port});
+});
+
+
+
+
+ What's Next?
+1. Validation: Add file type and size validation.
+2. Database: Save file metadata in a database like MongoDB.
+3. Cloud Storage: Integrate cloud storage services (e.g., AWS S3, Google Cloud Storage).
+
+Let me know if you need help with any of these!
+
+
+Let's proceed stepbystep to enhance our file upload system with validation, database integration, and cloud storage setup.
+
+
+
+ Step 1: Adding Validation
+We’ll validate:
+1. File size.
+2. File type (e.g., only images).
+
+ Update multer Configuration
+Modify the upload middleware to include validation:
+
+javascript
+const upload = multer({
+    storage,
+    limits: { fileSize: 2  1024  1024 }, // Max file size: 2MB
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (!allowedTypes.includes(file.mimetype)) {
+            const error = new Error('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
+            error.code = 'INVALID_FILE_TYPE';
+            return cb(error, false);
+        }
+        cb(null, true);
+    },
+});
+
+
+ Handle Validation Errors
+Enhance the /upload route to catch and respond to validation errors:
+javascript
+app.post('/upload', (req, res, next) => {
+    upload.single('file')(req, res, (err) => {
+        if (err) {
+            if (err.code === 'LIMIT_FILE_SIZE') {
+                return res.status(400).send({ message: 'File too large. Max size is 2MB.' });
+            }
+            if (err.code === 'INVALID_FILE_TYPE') {
+                return res.status(400).send({ message: err.message });
+            }
+            return res.status(500).send({ message: 'Internal server error.', error: err });
+        }
+        res.status(200).send({
+            message: 'File uploaded successfully.',
+            file: req.file,
+        });
+    });
+});
+
+
+
+
+ Step 2: Save File Metadata to a Database
+We’ll use MongoDB for this step.
+
+ Install MongoDB and Mongoose
+Run:
+bash
+npm install mongoose
+
+
+ Connect to MongoDB
+Add this to index.js:
+javascript
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://127.0.0.1:27017/fileUploads', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB');
+});
+
+
+ Define a Schema for File Metadata
+Create a models/File.js file:
+javascript
+const mongoose = require('mongoose');
+
+const fileSchema = new mongoose.Schema({
+    filename: String,
+    path: String,
+    size: Number,
+    mimetype: String,
+    uploadDate: { type: Date, default: Date.now },
+});
+
+module.exports = mongoose.model('File', fileSchema);
+
+
+ Save File Metadata on Upload
+In the /upload route:
+javascript
+const File = require('./models/File');
+
+app.post('/upload', (req, res, next) => {
+    upload.single('file')(req, res, async (err) => {
+        if (err) {
+            if (err.code === 'LIMIT_FILE_SIZE') {
+                return res.status(400).send({ message: 'File too large. Max size is 2MB.' });
+            }
+            if (err.code === 'INVALID_FILE_TYPE') {
+                return res.status(400).send({ message: err.message });
+            }
+            return res.status(500).send({ message: 'Internal server error.', error: err });
+        }
+
+        try {
+            // Save metadata to database
+            const file = new File({
+                filename: req.file.filename,
+                path: req.file.path,
+                size: req.file.size,
+                mimetype: req.file.mimetype,
+            });
+            await file.save();
+
+            res.status(200).send({
+                message: 'File uploaded successfully.',
+                file: req.file,
+                fileId: file._id,
+            });
+        } catch (error) {
+            res.status(500).send({ message: 'Error saving file metadata.', error });
+        }
+    });
+});
+
+
+
+
+ Step 3: Integrate Cloud Storage
+Let’s use AWS S3 for storing files.
+
+ Install AWS SDK
+Run:
+bash
+npm install awssdk multers3
+
+
+ Configure AWS S3
+Set up S3 in index.js:
+javascript
+const AWS = require('awssdk');
+const multerS3 = require('multers3');
+
+// AWS S3 configuration
+AWS.config.update({
+    accessKeyId: 'YOUR_AWS_ACCESS_KEY_ID',
+    secretAccessKey: 'YOUR_AWS_SECRET_ACCESS_KEY',
+    region: 'YOUR_AWS_REGION',
+});
+
+const s3 = new AWS.S3();
+
+// Multer S3 storage
+const s3Storage = multerS3({
+    s3,
+    bucket: 'yourbucketname',
+    metadata: (req, file, cb) => {
+        cb(null, { fieldName: file.fieldname });
+    },
+    key: (req, file, cb) => {
+        cb(null, Date.now() + '' + file.originalname);
+    },
+});
+
+const uploadToS3 = multer({ storage: s3Storage });
+
+
+ Upload Directly to S3
+Modify /upload route:
+javascript
+app.post('/upload', (req, res, next) => {
+    uploadToS3.single('file')(req, res, async (err) => {
+        if (err) {
+            return res.status(500).send({ message: 'Error uploading to S3.', error: err });
+        }
+        res.status(200).send({
+            message: 'File uploaded to S3 successfully.',
+            file: req.file,
+        });
+    });
+});
+
+
+
+
+ Complete Code: Advanced File Upload with Validation, MongoDB, and S3
+Now, you can:
+1. Validate uploads (size, type).
+2. Store metadata in MongoDB.
+3. Upload files to AWS S3.
+
+Let me know if you want this final complete code bundled or guidance on setting up AWS credentials or testing!

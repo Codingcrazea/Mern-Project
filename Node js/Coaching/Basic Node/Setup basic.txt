@@ -1,0 +1,78 @@
+for ES6 : 
+
+Run Command  :
+npm init -y // To generate package.json
+npm install @babel/core
+npm install @babel/node
+npm install @babel/preset-env 
+npm install babel-plugin-add-module-exports 
+
+In package.json : 
+add type : "module "
+
+Install Nodemon : 
+add scripts 
+"dev": "nodemon --exec babel-node",
+
+
+
+In Index.js File : 
+
+// Module Import 
+
+import http from 'http'
+import url from 'url'
+import fs from 'fs'
+
+// req.url access requested url 
+
+const server = http.createServer((req,res)=>{
+    res.writeHead(200,{'Content-type' : 'text/plain'});
+
+     // text/plain : return html as plain text 
+   // text/html : return html code
+    
+    if (req.url=="/home"){
+       res.write("<h1>Jai Shree Ganesh</h1>");  // Return html code in response
+       res.end();
+    }
+    
+
+    
+})
+
+server.listen(8080,()=>{
+    console.log("Served at port 8080");
+});
+
+_________________________________________________
+Html file : 
+Module ; fs 
+
+Two methods : 
+ReadfileSync . ReadFile 
+
+ReadFileSync 
+else if (req.url=="/"){
+        var data = fs.readFileSync("./i.htm");  // read file and store in a variable that can be rendered using res.write 
+        res.write(data);
+        console.log(data);
+        res.end();
+     }
+
+Read File :   No variable is required 
+
+// fs.readFile('my.html', function(err, data) {
+        // if (err) {
+          // res.writeHead(404, {'Content-Type': 'text/html'});
+          // res.end("404 Not Found");
+          // } 
+        // else{
+            // res.writeHead(200, {'Content-Type': 'text/html'});
+            // res.write(data);
+            // res.end();
+    // }});}
+    //
+
+_____________________________________
+ 

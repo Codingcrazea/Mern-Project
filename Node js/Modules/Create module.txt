@@ -1,0 +1,18 @@
+Create your own module 
+Example
+Create a module that returns the current date and time:
+
+exports.myDateTime = function () {
+  return Date();
+};
+
+Use the exports keyword to make properties and methods available outside the module file.
+
+Save the code above in a file called "myfirstmodule.js"
+
+Include your module
+
+var dt = require('./myfirstmodule');
+
+Notice that we use ./ to locate the module, that means that the 
+module is located in the same folder as the Node.js file.

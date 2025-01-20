@@ -1,0 +1,45 @@
+npm install mongodb
+
+Then 
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/mydb";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  console.log("Database created!");
+  db.close();
+});
+ 
+
+
+When Compass is started : 
+const express =require('express');
+const app = express();
+const { cli } = require('envinfo');
+const {MongoClient} = require('mongodb');
+const mongoose = require('mongoose');
+// const assert = require('assert');
+
+// Connection URL
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url);
+
+
+
+
+// Database Name
+const dbName = 'Learnmongo';
+
+async function getData(){
+  let result = await client.connect();
+  let db = result.db(dbName);
+  let collection = db.collection('newcollection');
+  //await collection.update not of work
+  // let response = await collection.find({}).toArray();
+  // console.log(response);
+}
+
+getData();
+app.listen(5000,(req,res)=>{
+  console.log('connected on 5000');    
+});

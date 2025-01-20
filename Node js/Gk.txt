@@ -1,0 +1,15 @@
+Package.json :
+if type = "module" then we need to import like an module 
+if ''' = "cjs" then we can use require method
+
+Use export in js :
+module.exports = { replaceStr }
+// or
+exports.replaceStr = replaceStr
+
+Global path accessed (double dot): "../filesname"
+
+or store path in a variable  
+const path =require('path');
+const staticpath = path.join(__dirname,"../public");
+ 

@@ -1,0 +1,68 @@
+Use of three files  
+Connection file : used to write code of mysql connection 
+Config file : Main code of firing query and take response to database 
+Routing file : To make routes 
+
+
+
+
+
+Connection file : name mysql.js 
+
+import mysql from 'mysql' 
+
+const connection = mysql.createPool({
+    host:'localhost',
+    user:'root',   // username
+    password:'',
+    database:'laravel'
+    // port name optional if port is not 3306  
+});
+export default connection;
+
+
+Config File : dbConfig.js
+
+import db from'./mysql.js'  // connection is imported 
+
+Explain : A promise is returned in a function name userData 
+
+Query is firing and response is stored in resolve and reject method
+
+var userData = (request)=>{   // request object takes data from route 
+        return new Promise((resolve,reject)=>{
+            db.getConnection((err,con)=>{
+                if(!err){
+                    var query = "insert into accounts (Name,Password,Mobile No.,Age,City) values(?,?,?,?,?);";
+
+                    // ? For giving values later  which will given via array
+
+
+                    con.query(query,[request.uname,request.pass,request.mob,request.age,request.add],(err,res)=>{
+                                                    // Above array takes value at place of ?    third parameter is callaback to handle success and failure
+
+                if(!err){
+                            resolve(res);  // Recieves if code is succesful     this response is rendered in 'then' function in route file 
+                        }else{
+                            reject(err); //  // Recieves if code is failed   response is catched inside 'catch' function in route file
+                        }
+                    })
+                }  
+            })
+        })
+    }
+
+
+export default userData;  // Method is exported 
+
+Route File :index4.js 
+
+import UserModel from './Database/dbConfig.js'
+app.post("/register",(req,res)=>{
+   var data =req.body;   // data is recieved and stored in data variable in form f object which is passed to config file in request method
+   UserModel(data).then((result)=>{
+    res.render("form");   // is succesful then this code executes 
+   }).catch((err)=>{
+    res.send(err);  // If error than this code executes
+   })
+

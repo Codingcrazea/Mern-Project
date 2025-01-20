@@ -1,0 +1,8 @@
+Precautions : 
+Do not fetch amount from client or frotend directly fetch product price from cource id 
+
+
+If Packages do not work properly and tell to upgrade node version update using this commands
+
+Simply install Node upgraded file from official website of win - 64 verison based on operating system
+and change path of folder in enviournment variable to folder path where new node.exe of new verision is located. 

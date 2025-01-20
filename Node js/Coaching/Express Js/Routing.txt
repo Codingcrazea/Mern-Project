@@ -1,0 +1,143 @@
+Types of Middleware : 
+
+Application Level Middleware 
+Built in middleware 
+Third party midlleware 
+Route Level middleware
+
+
+
+// Set path : 
+app.get("/",(req,res)=>{  // in first parameter   " url string after localhost is passed 
+    res.send("Server started"); // in second param callback function is used to store logic 
+});
+
+
+We can set using methods :
+app.get("/",(req,res)=>{
+	 res.send("<h1>Home URL Invoked : </h1>"+urlRoute)
+})
+app.get("/about",(req,res)=>{
+	 res.send("<h1>About URL Invoked : </h1>"+urlRoute)
+})
+app.get("/contact",(req,res)=>{
+	 res.send("<h1>GET : Contact URL Invoked : </h1>"+urlRoute)
+})
+app.post("/contact",(req,res)=>{
+	 res.send("<h1>POST : Contact URL Invoked : </h1>"+urlRoute)
+})
+app.patch("/contact",(req,res)=>{
+	 res.send("<h1>PATCH : Contact URL Invoked : </h1>"+urlRoute)
+})
+app.delete("/contact",(req,res)=>{
+	 res.send("<h1>DELETE : Contact URL Invoked : </h1>"+urlRoute)
+})
+app.get("/login",(req,res)=>{
+	 res.send("<h1>Login URL Invoked : </h1>"+urlRoute)
+})
+app.get("/register",(req,res)=>{
+	 res.send("<h1>Register URL Invoked : </h1>"+urlRoute)
+})
+
+
+________________________________________________________________
+Multiple pages routing  : 
+
+We create file to give half routing on one js and next url on other js file 
+
+For example : for url that have prefix /admin : create a route of /admin in main js file like index.js file   
+
+For redirecting use app.use()  middleware 
+
+
+userRoute.js is a js file that contain routes in js folder and other two also 
+
+import userRoute from './routes/userRoute.js'
+import adminRoute from './routes/adminRoute.js'
+import managerRoute from './routes/managerRoute.js'
+
+//Application level middleware
+app.use("/",userRoute)     // url " / " redirected to userRoute page 
+app.use("/admin",adminRoute)
+app.use("/manager",managerRoute)
+
+On UserRote page
+Routeswith get and post method are given   and Do not forget to export route
+
+import express from "express";
+var route = express.Router();
+
+route.get("/",(req,res)=>{
+     res.send("<h1>User Home URL Inoked : </h1>");
+})
+
+//For html  : admin folder must be created inside views as path  app.set ("views" ,"./view"); setted in view engine
+ Configuration
+//i.e. ./views tak ka path de rakha hai uske age ka path dena hai
+
+route.get("/",(req,res)=>{
+    res.render("admin/admin_home"); // res.render("folderName/FileName")
+})
+
+
+route.get("/about",(req,res)=>{
+    res.send("<h1>User About URL Inoked : </h1>");
+})
+
+export default route;
+___________________________________________________________________________
+
+
+
+
+Render Html Templates  in response 
+
+By simple method : 
+
+
+Use : Very easy > create absolute path using path module 
+res.sendFile() method : use absolute path   or directly give path 
+
+Create folder public > create css folder & html files in it .
+
+Set path and
+const path = require('path');
+const staticpath = path.join(__dirname,"/routes/p.html");
+app.get('/r',(req,res)=>{
+   res.sendFile(staticpath); // pass path 
+//    res.send();
+});
+
+
+
+
+
+
+
+We need View engine : 
+View engine  : ejs , pug , jade 
+
+File with extension :  .ejs , .pug , .jade 
+
+Steps : 
+1> Create Folder with name views , or any other name     To put html codes But Put   extension 
+
+.ejs or .pug , .jade depends on view engine you are using 
+
+Like For ejs 
+View Folder : 
+   name.ejs 
+   login.ejs 
+   
+
+2> In app.js file 
+ Set Configuration  :
+ app.set("view engine" ,"ejs");
+app.set ("views" ,"./view");    views is fixed name ,   "./view  " is user defined path name 
+
+ 
+3. Now in routing file use res.render( )
+
+app.get("/" ,(req,res)=>{
+   res.render("ejs filename  or file path if not in same directory");   // without .ejs extension
+} 

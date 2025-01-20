@@ -1,0 +1,33 @@
+Create a database named "mydb":
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword"
+});
+
+
+
+// Create database statement is used 
+
+
+con.connect(function(err) {
+ if (err){
+        console.log(err);
+    } 
+  console.log("Connected!");
+  con.query("CREATE DATABASE mydb", function (err, result) {
+    if (err){
+        console.log(err);
+    } 
+    console.log("Database created");
+  });
+});
+
+Save the code above in a file called "demo_create_db.js" and run the file:
+
+Run "demo_create_db.js"
+
+C:\Users\Your Name>node demo_create_db.js

@@ -1,0 +1,67 @@
+ Import modules http , fs , url 
+
+First put  Content-type' : 'text/html' 
+Using two methods : 
+
+sync Method : readFileSync  
+Rules : 
+variable is created , 
+
+Read File : Variable is not created 
+
+
+Async Method : 
+else if (req.url=="/sync"){
+        fs.readFile("./i.htm",(err,data)=>{   // No object s created
+            if (data!=null){
+                res.write(data);
+                res.end();
+            } else{
+                console.log(err);
+            }
+        });
+     
+
+Code : 
+
+import http from 'http'
+import url from 'url'
+import fs from 'fs'
+
+const server = http.createServer((req,res)=>{
+    res.writeHead(200,{'Content-type' : 'text/html'});
+    
+    if (req.url=="/home"){
+       res.write("<h1>Jai Shree Ganesh</h1>");
+       res.end();
+    }
+    
+    else if (req.url=="/"){
+        var data = fs.readFileSync("./i.htm");   // stored in inside a object
+        if (data!=null){
+            res.write(data);
+            console.log(data);
+            res.end();
+        }
+        else{
+            console.log("Error")
+        }
+        
+      
+else if (req.url="/sync"){
+        fs.readFile("./i.htm",(err,data)=>{
+            if (data!=null){
+                res.write(data);
+                res.end();
+            } else{
+                console.log(err);
+            }
+        });
+     
+    
+})
+
+server.listen(8080,()=>{
+    console.log("Served at port 8080");
+    console.warn("djjdhjdh");
+});

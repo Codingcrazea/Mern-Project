@@ -1,0 +1,133 @@
+Node js is a enviournment not framework.
+
+No, it's a JavaScript runtime
+
+There are various node js framework to use .
+
+________________________________________________________
+Types of Application we can create on web :
+
+Static web application.
+Dynamic web application.
+E-commerce web application.
+Content manage system web application.
+Single-page web application.
+Multiple-pages web application.
+Portal web application.
+Animated web application.
+
+
+1 A static web application is a collection of HTML, CSS, and JavaScript
+ to 
+facilitate displaying important content and information. 
+
+2. A dynamic web application, which displays live data based 
+on user requests, is considered one of the 
+best web applications. Dynamic web applications are more 
+sophisticated than static web applications and have several 
+elements of interaction and 
+methods to draw attention to products or services.
+
+They usually use databases to store private and public data displayed on the website, allowing administrators to modify content and include interactive components in the web application. Dynamic apps are 
+built using languages such as PHP and ASP.NET.
+Examples:
+
+Facebook
+Netflix
+
+
+
+
+
+3. E-commerce web application
+
+An e-commerce web application is any business that allows customers to purchase goods or services over the internet. It's not just about selling products but also providing information about them, adding new products, removing outdated products, managing payments, facilitating electronic payments,
+ and offering a user-friendly interface.  
+
+Examples:
+
+Amazon
+ebpay
+
+4. Content manage system web application
+imaginary cloud logoWebflow vs. WordPress: which one is better for you? 
+A content management system (CMS) allows website owners to create, edit, and publish content, including images, text, and video, without involving a technical team. You can modify content through an admin panel without any knowledge of programming language.
+
+Examples:
+
+Webflow
+Wordpress
+
+5 . Single-page web application  Frame work : Angular Js
+Single-page web applications 
+are websites that handle all their data on a single web page.
+
+6. Multiple-pages web application
+A multiple-page web app reloads 
+the whole page when the user navigates to a different page.
+
+ Examples:
+
+Google Docs
+
+7. Portal Web Application :
+ Portal web application
+A portal web application is a website that provides access to many different pages and links. 
+
+Portal web applications are often used for online shopping, news sites, blogs, 
+and search engines. 
+
+A portal web application's main idea is to browse through different content
+ without leaving the site. 
+Portals are the best choice for businesses and organisations 
+that want to make interfaces tailored to their target audience's needs. 
+They're also great for searching for information on various topics. 
+
+Access is only given to registered users; once a user logs in, 
+the service provider can watch what that user does.
+
+
+8. Animated web application
+Animated web applications are used for entertainment purposes. 
+These days, you can use animations to make websites more attractive and engaging since 
+these web applications have creativity and 
+design that you can't find in any other types. 
+
+Examples of animated web applications are applied on e-learning, e-commerce, and entertainment websites.
+
+To make animated web apps, you'll usually need HTML5, JavaScript, CSS, FLASH, and SVG.
+
+Examples:
+
+Google's Your Plan, Your Planet
+
+
+Rich internet web applicatio
+
+Examples:
+
+Coursera
+Udemy
+Animat
+
+
+9 . Progressive web application
+
+Progressive web apps are cross-platform web apps that use the latest browser APIs (Application Programming Interface), features, 
+and advanced enhancement methods to give you an experience like a native mobile app.
+
+Progressive web applications use standard web technologies like HTML, CSS, and JavaScript.
+
+10. Rich internet web application
+Rich Internet applications (RIAs) are mostly web apps that can do many of the same things as desktop apps. 
+They work around browser limitations and depend on plugins on the client side. 
+The resources used to make this web app are more efficient and visually appealing. 
+It also has a more interactive user interface and is easier to understand than older desktop apps. 
+Some RIA web apps can also be used when you're not online. 
+
+The main problems with the RIA are its risks and the trouble they cause. 
+
+For example, if the plugin is outdated, many parts of the app or the whole app might need to be fixed.
+
+
+

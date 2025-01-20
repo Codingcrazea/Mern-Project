@@ -1,0 +1,176 @@
+body{
+  background-color: #ece6e6;
+}
+/* Navigation & header content start */
+.topnav {
+    overflow: hidden;
+    background-color:transparent;
+    position: relative;
+    display: block;
+    margin: auto;
+    padding: 10px;
+    top:10%;
+    text-align: center;
+    bottom: 0;
+    padding: auto;
+  } 
+  .topnav a {
+    float: left;
+    color: rgb(157, 161, 161);
+    background-color: transparent;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }  
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }  
+  .topnav a.active {
+    background-color: gold;
+    color: white;
+  }
+  .top-header{
+    width: 100%;
+    max-width: 100%;
+    height: 250px;
+    background-color: #333;
+   }
+  .top-first-line{
+    overflow: hidden;
+    background-color:transparent;
+    margin-top: 10%;
+    display: block;
+    margin: 10px;
+    font-size: 20px;
+    margin-left: 60%;
+    padding: 10px;
+  }
+  .top-first-line a{
+    float: left;
+   color: rgb(157, 161, 161);
+   background-color: transparent;
+   text-align: center;
+   padding: 14px 16px;
+   text-decoration: none;
+   font-size: 17px;
+  } 
+  .top-first-line input[type=text] {
+    float: right;
+    padding: 6px;
+    border: none;
+    text-align: center;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+  }
+
+  .top-first-line a:hover{
+    background-color: #ddd;
+    color: whitesmoke; 
+  }
+  .go-print {
+    font-size: 20px;
+    color: azure;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+  
+  }  
+/* Navigation content end */
+/* Center content */
+.first-center-content{
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid rgb(75, 71, 71) ;
+    background-color: azure;
+ }
+  #f-c{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: oblique;
+    text-align: center;
+    margin-top: 10%;
+  }
+.f-products{
+  width: 100%;
+  height:auto;
+  display: block;
+  margin-top: 10px;
+  background-image: linear-gradient(rgb(187, 243, 247),rgb(141, 238, 193));
+  border-top: 1px solid black;
+  border-bottom: 1px dashed black;
+}
+.c-products{
+  font-size: 40px ;
+  margin-left: 15px;
+  color: #333;
+  font-style: bold;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;  
+}
+#categories{
+  font-size: 25px;
+  color: #333;
+  margin-left: 15px;
+
+}
+/* @keyframes anim{ */
+  /* 25%{transform: ;} */
+/* } */
+
+.try{
+  width: 30%;
+  height: 200px;
+  display: flex;
+  margin: 50px;
+  border: 10px solid blue;
+  display: block;
+  stroke-width: 20px;
+  transform: scale(1.8,1) skew(4,5);
+  border-top-left-radius: 30 px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 50px; 
+  border-left-style: double ;
+  background-color: blueviolet;
+}
+
+.f {
+  font-size: medium;
+  background-color: rgb(59, 28, 16);
+  align-items: center;
+  width: 30%;
+  height: 200px;
+  border: 14px black ;
+  border-radius: 4px;
+  margin: 30px;
+
+  --a: 8deg; /* control the angle of rotation (the smaller, the better) */
+  width: 250px;
+  aspect-ratio: 1;
+  border-radius: 20px;
+  transform: perspective(400px) rotate3d(var(--r,1,-1),0,calc(var(--i,1)*var(--a)));
+  -webkit-mask: 
+    linear-gradient(135deg,#000c 40%,#000,#000c 60%)
+    100% 100%/250% 250%;
+  transition: .4s;
+  cursor: pointer;
+}
+
+/* .alt { */
+  /* --r: 1,1; */
+  /* -webkit-mask:  */
+    /* linear-gradient(45deg,#000c 40%,#000,#000c 60%) */
+    /* 0 100%/250% 250%; */
+/* } */
+/* img:hover { */
+  /* --i: -1; */
+  /* -webkit-mask-position: 0 0; */
+/* } */
+/* .alt:hover { */
+  /* -webkit-mask-position: 100% 0; */
+/* } */
+/*  */
+/*  */
+/*  */
+/* }   */

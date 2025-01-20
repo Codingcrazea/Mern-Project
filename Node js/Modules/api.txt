@@ -1,0 +1,15 @@
+Code to read api json file from directory and display
+
+if(req.url =='/a'){
+
+fs.readFile(`${__dirname}/sample.json`,"utf-8",function(err,data){
+    if(err){
+        res.writeHead(404,{'Content-Type':'text/html'});
+        res.end("Page Not Found");
+    }else{
+      res.write(data);
+      res.end();
+    }
+});
+
+here sample.json file is readed and displayed to screen on requested url .

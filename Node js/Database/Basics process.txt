@@ -1,0 +1,12 @@
+FIRST we create connection with some code syntax 
+like 
+
+We run query in sql language using query function  
+
+
+Written in other file .
+
+Then processes 
+
+create table :
+

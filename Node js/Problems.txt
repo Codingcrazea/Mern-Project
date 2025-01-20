@@ -1,0 +1,22 @@
+Api :
+req.body for post 
+req.query cannot be used for post method
+
+Use 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // For parsing JSON
+app.use(bodyParser.urlencoded({ extended: true })); // For parsing URL-encoded data
+
+Before defining route otherwise req.body not apply
+
+
+//to extract body data from request(POST, PUT, DELETE, PATCH)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
+//to allow cors request
+app.use(cors())
+
+// to allow file input
+app.use(fileUpload());

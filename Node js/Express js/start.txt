@@ -1,0 +1,40 @@
+Create app with express : 
+Code : 
+
+const express =require('express');
+const app = express();
+
+// Set path : 
+app.get("/",(req,res)=>{  // in first parameter   " url string after localhost is passed 
+    res.send("Server started"); // in second param callback function is used to store logic 
+});
+
+// Start server : 
+app.listen(process.env.PORT,()=>{
+    console.log("Server connected");
+});
+
+process.env.PORT is enviourment variable stored in .env file 
+we can add direct port no. like 5000.
+
+
+
+
+Path setting : 
+app.get("/",(req,res)=>{  // in first parameter   " url string after localhost is passed 
+    res.send("Server started"); // in second param callback function is used to store logic 
+});
+
+instead of get , post , and other methods also can be used 
+
+______________________________________________________________
+Send html as response : 
+app.get('/' ,(req,res) =>{  res is used to handle response 
+    res.send("Server started");
+});
+
+in res.send("<h1>Heading</h1>");
+
+Imp methods : 
+res.write()  : loads page repeatedly 
+send : closes connection  

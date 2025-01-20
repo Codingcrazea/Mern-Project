@@ -1,0 +1,145 @@
+Sure! Data fetching in Next.js can be done using different methods depending on whether you need server-side rendering (SSR), static site generation (SSG), or client-side data fetching. Here's a breakdown of each method with code examples and explanations.
+
+### 1. **Static Site Generation (SSG)**
+
+**SSG** is used when you want to generate static pages at build time. This method is great for pages where data does not change often.
+
+**Code Example**:
+
+```jsx
+// pages/index.js
+import React from 'react';
+
+// This function is executed at build time and fetches data
+export async function getStaticProps() {
+  // Fetch data from an external API or database
+  const res = await fetch('https://api.example.com/data');
+  const data = await res.json();
+
+  // Return the data as props
+  return {
+    props: {
+      data
+    }
+  };
+}
+
+// The component receives the fetched data as props
+const HomePage = ({ data }) => {
+  return (
+    <div>
+      <h1>Static Site Generation (SSG)</h1>
+      <ul>
+        {data.map(item => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default HomePage;
+```
+
+**Explanation**:
+- `getStaticProps`: This async function runs at build time. It fetches data from an API or database and returns it as props to the component. It only runs during the build process, not on each request.
+- `props`: The returned object’s `props` key contains the data which is passed to the page component as props.
+- `HomePage`: The page component receives the `data` as a prop and renders it.
+
+### 2. **Server-Side Rendering (SSR)**
+
+**SSR** allows you to fetch data on each request, so the page is always up-to-date. This is useful for pages where data changes frequently.
+
+**Code Example**:
+
+```jsx
+// pages/index.js
+import React from 'react';
+
+// This function is executed on each request and fetches data
+export async function getServerSideProps() {
+  // Fetch data from an external API or database
+  const res = await fetch('https://api.example.com/data');
+  const data = await res.json();
+
+  // Return the data as props
+  return {
+    props: {
+      data
+    }
+  };
+}
+
+// The component receives the fetched data as props
+const HomePage = ({ data }) => {
+  return (
+    <div>
+      <h1>Server-Side Rendering (SSR)</h1>
+      <ul>
+        {data.map(item => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default HomePage;
+```
+
+**Explanation**:
+- `getServerSideProps`: This async function runs on every request to the page. It fetches data and returns it as props. This allows the page to be rendered with fresh data on each request.
+- `props`: Contains the fetched data which is passed to the page component.
+
+### 3. **Client-Side Data Fetching**
+
+**Client-side data fetching** happens in the browser after the initial HTML is rendered. This is useful for dynamic content that doesn’t need to be rendered on the server.
+
+**Code Example**:
+
+```jsx
+// pages/index.js
+import React, { useEffect, useState } from 'react';
+
+const HomePage = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from an external API
+    const fetchData = async () => {
+      const res = await fetch('https://api.example.com/data');
+      const result = await res.json();
+      setData(result);
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means this effect runs once after the initial render
+
+  return (
+    <div>
+      <h1>Client-Side Data Fetching</h1>
+      <ul>
+        {data.map(item => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default HomePage;
+```
+
+**Explanation**:
+- `useState`: A React hook that manages state within the component. Here, it's used to store the data fetched from the API.
+- `useEffect`: A React hook that performs side effects in function components. In this case, it’s used to fetch data after the initial render.
+- `fetchData`: An async function inside the effect that fetches data and updates the component state.
+- The empty dependency array `[]` means that the effect runs only once, similar to `componentDidMount` in class components.
+
+### Summary
+
+- **SSG**: Fetches data at build time. Good for static pages where data does not change often.
+- **SSR**: Fetches data on each request. Good for pages where data needs to be fresh.
+- **Client-Side Data Fetching**: Fetches data in the browser after the page loads. Good for dynamic content or interactive features.
+
+Each method has its own use cases depending on the nature of your data and how often it changes.

@@ -1,0 +1,205 @@
+Community server download lonk : https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-5.0.23-signed.msi
+
+First set up account on mongodb : 
+
+then get connection string : 
+
+Db name : learnmongo  / learnmongo / newlearn 
+collection name : newcollection
+
+password : Sanskar@123  / sanskar  // use password without special characters 
+
+Connection string : mongodb+srv://learnmongo:<password>@cluster0.gyfh240.mongodb.net/?retryWrites=true&w=majority
+
+replace <password>  with Sanskar@123
+
+____________________________________
+Working with node JS :
+ 
+In **MongoDB**, the URL in Node.js specifies the database connection, but the **collection** (a grouping of documents within a database) is handled separately in your application logic. Let's break this down with an example.
+
+---
+
+## **Step 1: MongoDB Connection URL**
+The MongoDB connection URL has the following structure:
+```
+mongodb://<username>:<password>@<host>:<port>/<databaseName>
+```
+
+### Example:
+```javascript
+mongodb://localhost:27017/myDatabase
+```
+- `localhost`: The hostname where MongoDB is running.
+- `27017`: The default port for MongoDB.
+- `myDatabase`: The name of the database to use.
+
+---
+
+## **Step 2: Connecting to a Database in Node.js**
+Use the **Mongoose** library (or the `mongodb` driver) to connect to MongoDB. Let’s use **Mongoose** here.
+
+### Install Mongoose
+```bash
+npm install mongoose
+```
+
+### Code Example
+```javascript
+const mongoose = require('mongoose');
+
+// MongoDB connection URL
+const mongoURL = 'mongodb://localhost:27017/myDatabase';
+
+// Connect to MongoDB
+mongoose.connect(mongoURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+
+db.on('connected', () => {
+    console.log('Connected to MongoDB successfully');
+});
+
+db.on('error', (err) => {
+    console.error('Error connecting to MongoDB:', err);
+});
+```
+
+---
+
+## **Step 3: Define a Collection (Using Mongoose Schema)**
+In MongoDB, collections don’t need to be explicitly defined—they are created when you first insert data into them. However, in Mongoose, you define schemas to structure your collections.
+
+### Define a Schema and Model
+```javascript
+const mongoose = require('mongoose');
+
+// Define a schema for a "users" collection
+const userSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    age: { type: Number, required: true },
+});
+
+// Create a model for the "users" collection
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
+```
+
+- The `User` model automatically maps to the `users` collection in the `myDatabase` database.
+
+---
+
+## **Step 4: Perform Operations on a Collection**
+Use the model to perform CRUD (Create, Read, Update, Delete) operations.
+
+### Example: Insert a Document
+```javascript
+const User = require('./models/User');
+
+// Insert a new user into the "users" collection
+const createUser = async () => {
+    try {
+        const newUser = new User({
+            name: 'John Doe',
+            email: 'john.doe@example.com',
+            age: 30,
+        });
+
+        const savedUser = await newUser.save();
+        console.log('User saved successfully:', savedUser);
+    } catch (error) {
+        console.error('Error saving user:', error);
+    }
+};
+
+createUser();
+```
+
+---
+
+### Example: Find Documents
+```javascript
+// Find all users in the "users" collection
+const findUsers = async () => {
+    try {
+        const users = await User.find();
+        console.log('Users found:', users);
+    } catch (error) {
+        console.error('Error finding users:', error);
+    }
+};
+
+findUsers();
+```
+
+---
+
+## **Using the MongoDB Native Driver**
+If you’re using the MongoDB native driver (not Mongoose), you’ll handle the database and collection differently.
+
+### Install the MongoDB Driver
+```bash
+npm install mongodb
+```
+
+### Connect to MongoDB and Target a Collection
+```javascript
+const { MongoClient } = require('mongodb');
+
+const mongoURL = 'mongodb://localhost:27017';
+const dbName = 'myDatabase';
+const collectionName = 'users';
+
+// Connect to MongoDB
+const client = new MongoClient(mongoURL);
+
+const run = async () => {
+    try {
+        await client.connect();
+        console.log('Connected to MongoDB successfully');
+
+        // Access the database and collection
+        const db = client.db(dbName);
+        const usersCollection = db.collection(collectionName);
+
+        // Insert a document
+        const result = await usersCollection.insertOne({
+            name: 'Jane Doe',
+            email: 'jane.doe@example.com',
+            age: 25,
+        });
+        console.log('Document inserted:', result.insertedId);
+
+        // Find documents
+        const users = await usersCollection.find().toArray();
+        console.log('Users:', users);
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+        await client.close();
+    }
+};
+
+run();
+```
+
+---
+
+### **Summary**
+- **Database is targeted via the connection URL** in `mongoose.connect()` or `MongoClient.db()`.
+- **Collection is targeted via a Mongoose model** (e.g., `User`) or the `db.collection()` method in the native driver.
+  
+### Let me know if you need clarification or additional examples!
+
+
+
+ 
+
+
+
+

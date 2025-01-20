@@ -1,0 +1,363 @@
+Different query are runned in query function to perform different tasks .
+
+
+Create table : // CREATE TABLE  statement is used .
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "yourusername",
+  password: "yourpassword",
+  database: "mydb"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+
+// here we have to run sql query
+
+  var sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))";
+  con.query(sql, function (err, result) {
+    if (err){
+        console.log(err);
+    }
+    console.log("Table created");
+  });
+});
+
+
+__++++++++++++++
+
+Primary Key
+When creating a table, you should also create a column with a unique key for each record.
+
+This can be done by defining a column as "INT AUTO_INCREMENT PRIMARY KEY" which will insert a unique number for each record. Starting at 1, and increased by one for each reco
+
+Put in query method 
+
+"CREATE TABLE customers (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), address VARCHAR(255))";
+
+
+
+Only query is written  then callback function is used as second parameter .
+
+var sql = "CREATE_TABLE customers (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), address VARCHAR(255))";
+
+// callback function is used as second parameter .
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table created");
+  });
+
+
+Create a primary key on existing table
+
+var sql = "ALTER TABLE customers ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY";
+
+ 
+
+
+___________________________________________________________
+
+Tips : Result Object in callback function  
+
+  con.query(sql, function (err, result) {  // can be used to get various properties like 
+fieldCount: 0,
+  affectedRows: 14,
+  insertId: 0,
+  serverStatus: 2,
+  warningCount: 0,
+  message: '\'Records:14  Duplicated: 0  Warnings: 0',
+  protocol41: true,
+  changedRows: 0
+
+// These all are properties  that  we can acess by result object like console.log(result,affectedRows);
+
+
+
+
+Insert Info :
+
+var sql = "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')";
+
+
+Insert multiple records :
+
+var sql = "INSERT INTO customers (name, address) VALUES ?";
+  var values = [
+    ['John', 'Highway 71'],
+    ['Peter', 'Lowstreet 4'],
+    ['Amy', 'Apple st 652'],
+    ['Hannah', 'Mountain 21'],
+    ['Michael', 'Valley 345'],
+    ['Sandy', 'Ocean blvd 2'],
+    ['Betty', 'Green Grass 1'],
+    ['Richard', 'Sky st 331'],
+    ['Susan', 'One way 98'],
+    ['Vicky', 'Yellow Garden 2'],
+    ['Ben', 'Park Lane 38'],
+    ['William', 'Central st 954'],
+    ['Chuck', 'Main Road 989'],
+    ['Viola', 'Sideway 1633']
+  ];
+  con.query(sql, [values], function (err, result) {
+    if (err) throw err;
+    console.log("Number of records inserted: " + result.affectedRows);
+  });
+
+
+
+
+
+
+
+
+_______________________________________________________
+Select From 
+
+ con.query("SELECT * FROM customers", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+  });
+
+
+con.query("SELECT * FROM customers WHERE address = 'Park Lane 38'", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+
+// SELECT *statement will return all columns
+
+
+// This will written multiple colums as   console.log(result);
+
+
+To select only some of the columns in a table, use the "SELECT" statement followed by the column name.
+
+ con.query("SELECT name, address FROM customers", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+  });
+
+
+We can acess a single object of an array :
+console.log(result[2].address);
+
+We can also display field object :
+
+con.query("SELECT name, address FROM customers", function (err, result, fields) {
+    if (err) throw err;
+    console.log(fields);
+  });
+
+
+Example Output :
+
+catalog: 'def',
+    db: 'mydb',
+    table: 'customers',
+    orgTable: 'customers',
+    name: 'name',
+    orgName: 'name',
+
+
+__________________________________________________
+Selecting filter :
+
+When selecting records from a table, you can filter the selection by using the "WHERE" statement: 
+
+con.query("SELECT * FROM customers WHERE address = 'Park Lane 38'", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+
+
+Select record starts with  certain letter : like for letter s 
+
+con.query("SELECT * FROM customers WHERE address LIKE 'S%'"
+
+
+____________________________________________________________
+Escaping Query Values
+
+When query values are variables provided by the user, you should escape the values.
+
+This is to prevent SQL injections, which is a common web hacking technique to destroy or misuse your database.
+
+The MySQL module has methods to escape query values:
+
+var adr = 'Mountain 21';
+
+var sql = 'SELECT * FROM customers WHERE address = ' + mysql.escape(adr);
+con.query(sql, function (err, result) {
+  if (err) throw err;
+  console.log(result);
+
+we can also escape using placeholders : 
+
+var adr = 'Mountain 21';
+var sql = 'SELECT * FROM customers WHERE address = ?';
+con.query(sql, [adr],
+
+
+
+
+
+
+If you have multiple placeholders, the array contains multiple values, in that order:
+
+ExampleGet your own Node.js Server
+Multiple placeholders:
+
+var name = 'Amy';
+var adr = 'Mountain 21';
+var sql = 'SELECT * FROM customers WHERE name = ? OR address = ?';
+con.query(sql, [name, adr], function (err, result) {
+  if (err) throw err;
+  console.log(result);
+}); 
+
+
+
+___________________________----________________________________________________________
+
+Sort the result :
+
+Sort the result alphabetically by name:
+
+con.query("SELECT * FROM customers ORDER BY name", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+
+
+con.query("SELECT * FROM customers ORDER BY name DESC",
+
+
+
+_______________________________________________________________
+Delete :
+
+Delete record : 
+
+var sql = "DELETE FROM customers WHERE address = 'Mountain 21'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Number of records deleted: " + result.affectedRows);
+  });
+
+
+Delete a table :
+
+var sql = "DROP TABLE customers";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table deleted");
+  });
+
+
+Drop if exists :
+
+
+var sql = "DROP TABLE IF EXISTS customers";
+
+
+__________________________________________________________________
+Update table :
+
+Overwrite the address column from "Valley 345" to "Canyon 123":
+
+var sql = "UPDATE customers SET address = 'Canyon 123' WHERE address = 'Valley 345'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) updated");
+  });
+});
+
+
+___________________________________________________________________
+Limit the result :
+
+Select the 5 first records in the "customers" table:
+
+var sql = "SELECT * FROM customers LIMIT 5";
+
+con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+
+
+
+
+Start from position 3, and return the next 5 records:
+
+var sql = "SELECT * FROM customers LIMIT 5 OFFSET 2";
+
+Shorter syntax :
+
+var sql = "SELECT * FROM customers LIMIT 2, 5";
+
+
+_____________________________________________________________________
+You can combine rows from two or more tables, based on a related column between them, by using a JOIN statement.
+
+
+Example we have two tables :
+
+users
+[
+  { id: 1, name: 'John', favorite_product: 154},
+  { id: 2, name: 'Peter', favorite_product: 154},
+  { id: 3, name: 'Amy', favorite_product: 155},
+  { id: 4, name: 'Hannah', favorite_product:},
+  { id: 5, name: 'Michael', favorite_product:}
+]
+
+products :
+
+[
+  { id: 154, name: 'Chocolate Heaven' },
+  { id: 155, name: 'Tasty Lemons' },
+  { id: 156, name: 'Vanilla Dreams' }
+]
+
+
+
+// This will return These two tables can be combined by using users' favorite_product field and products' id field. 
+
+var sql = "SELECT users.name AS user, products.name AS favorite FROM users JOIN products ON users.favorite_product = products.id";
+
+
+
+return all users, no matter if they have a favorite product or not, use the LEFT JOIN statement:
+
+SELECT users.name AS user,
+products.name AS favorite
+FROM users
+LEFT JOIN products ON users.favorite_product = products.id
+
+
+ return all products, and the users who have them as their favorite, even if no user have them as their favorite, use the RIGHT JOIN statement:
+
+Example
+Select all products and the user who have them as their favorite:
+
+SELECT users.name AS user,
+products.name AS favorite
+FROM users
+RIGHT JOIN products ON users.favorite_product = products.id
+
+
+
+
+SELECT users.name AS user,
+products.name AS favorite
+FROM users
+RIGHT JOIN products ON users.favorite_product = products.id
+
+
+
+
+

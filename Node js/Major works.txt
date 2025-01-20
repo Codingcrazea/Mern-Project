@@ -1,0 +1,203 @@
+How to use .env and Mongo Db 
+
+
+Using `type: "module"` in your `package.json` requires ES module syntax (`import` instead of `require`). Here's how to set up **`.env` configuration** and **MongoDB** in a project using ES modules:
+
+---
+
+### **1. Using `.env` in ES Modules**
+1. **Install `dotenv`**:
+   ```bash
+   npm install dotenv
+   ```
+
+2. **Import and configure `dotenv` in your code**:
+   - In ES modules, use:
+     ```javascript
+     import dotenv from 'dotenv';
+     dotenv.config();
+     ```
+
+3. **Create a `.env` file**:
+   ```env
+   MONGO_URI=mongodb://localhost:27017/myapp
+   PORT=3000
+   ```
+
+4. **Access environment variables**:
+   Use `process.env.VARIABLE_NAME` in your code:
+   ```javascript
+   console.log(process.env.MONGO_URI);
+   ```
+
+---
+
+### **2. MongoDB Setup in Node.js**
+To set up MongoDB in a project with **`type: "module"`**, follow these steps:
+
+#### **a. Install MongoDB dependencies**
+```bash
+npm install mongoose
+```
+
+#### **b. Import `mongoose`**
+In ES modules, use:
+```javascript
+import mongoose from 'mongoose';
+```
+
+#### **c. MongoDB Connection**
+Use the following code to connect MongoDB to your application:
+
+```javascript
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const connectToMongoDB = async () => {
+    try {
+        const dbConnection = await mongoose.connect(process.env.MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log(`MongoDB Connected: ${dbConnection.connection.host}`);
+    } catch (error) {
+        console.error(`Error: ${error.message}`);
+        process.exit(1); // Exit the process if connection fails
+    }
+};
+
+export default connectToMongoDB;
+```
+
+#### **d. Call the MongoDB connection in your `app.js`**
+```javascript
+import express from 'express';
+import connectToMongoDB from './config/mongoConfig.js'; // Adjust the path as necessary
+
+const app = express();
+app.use(express.json());
+
+// Connect to MongoDB
+connectToMongoDB();
+
+// Test route
+app.get('/', (req, res) => {
+    res.send('API is running...');
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+```
+
+---
+
+### **3. Testing MongoDB Connection**
+#### **Step 1**: Start MongoDB locally
+If MongoDB is installed locally, start the server:
+```bash
+mongod
+```
+
+#### **Step 2**: Test your API
+Run your server:
+```bash
+node app.js
+```
+
+Check the console log:
+- Success: `MongoDB Connected: localhost`
+- Error: If the connection fails, you’ll see an error message.
+
+---
+
+### **4. Example of a User Schema with MongoDB**
+Create a folder `models/` and add `User.js`:
+
+```javascript
+import mongoose from 'mongoose';
+
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+}, { timestamps: true });
+
+export default mongoose.model('User', userSchema);
+```
+
+---
+
+### **5. Adding and Fetching Data**
+Here’s an example of a route to register users:
+
+#### **Routes Example**
+Create a `routes/userRoutes.js`:
+```javascript
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import User from '../models/User.js';
+
+const router = express.Router();
+
+// Register User
+router.post('/register', async (req, res) => {
+    const { username, email, password } = req.body;
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = await User.create({ username, email, password: hashedPassword });
+        res.status(201).json({ message: 'User registered', user: newUser });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+export default router;
+```
+
+#### **Connect Routes to App**
+In `app.js`:
+```javascript
+import userRoutes from './routes/userRoutes.js';
+
+app.use('/api/users', userRoutes);
+```
+
+---
+
+### **6. Testing MongoDB with Postman**
+1. Start the server:
+   ```bash
+   node app.js
+   ```
+
+2. Open Postman:
+   - URL: `http://localhost:3000/api/users/register`
+   - Method: `POST`
+   - Body:
+     ```json
+     {
+         "username": "john_doe",
+         "email": "john@example.com",
+         "password": "mypassword"
+     }
+     ```
+   - Response:
+     ```json
+     {
+         "message": "User registered",
+         "user": {
+             "_id": "64b8a847f4e2c431fce88a91",
+             "username": "john_doe",
+             "email": "john@example.com",
+             "password": "$2a$10$...",
+             "createdAt": "2025-01-19T12:00:00.000Z",
+             "updatedAt": "2025-01-19T12:00:00.000Z",
+             "__v": 0
+         }
+     }
+     ```
+
+This setup ensures MongoDB is integrated and functioning properly with ES modules in your project.

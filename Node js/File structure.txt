@@ -1,0 +1,33 @@
+myfirst s is very imp to create and start server almost all work is done in that file 
+
+all modules are imported in that module
+
+Run any file using command node filename
+
+Files : 
+.env : Enviourment variables file used to store sensitive data in an website like
+passwords, API credentials, and other information that should not be written directly in code
+
+
+
+Use of files :
+package .json : It includes some information about project 
+
+package.lock.json : agar kuchh dependency koi aur dependencies chahiye run karne ke liye 
+
+isliye isme dependency tree hota hai 
+
+
+___________________________________
+We can create as many files as to use in other file export first file and create object of second file 
+
+First file.js 
+// code 
+
+
+module.export = object variable name 
+
+Second file : 
+const variable = require'./First file .js');
+
+

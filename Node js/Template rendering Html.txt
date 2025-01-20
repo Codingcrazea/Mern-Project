@@ -1,0 +1,181 @@
+### Using Template Engines in Node.js
+
+Template engines are tools that help render HTML dynamically by embedding JavaScript code or variables. Commonly used template engines include **EJS**, **Pug**, and **Handlebars**. Below is the step-by-step process for using template engines in Node.js.
+
+---
+
+## **1. Setting up Node.js**
+### **Install Express**
+```bash
+npm init -y
+npm install express
+```
+
+---
+
+## **2. Using EJS**
+### **Step 1: Install EJS**
+```bash
+npm install ejs
+```
+
+### **Step 2: Set Up EJS in Your App**
+In your `app.js`:
+```javascript
+import express from 'express';
+
+const app = express();
+
+// Set the view engine to EJS
+app.set('view engine', 'ejs');
+
+// Define a route
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Home Page', message: 'Welcome to EJS!' });
+});
+
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+```
+
+### **Step 3: Create EJS Templates**
+- Create a `views` directory in the root of your project.
+- Add a file `index.ejs` inside the `views` directory.
+
+#### `views/index.ejs`:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= message %></h1>
+</body>
+</html>
+```
+
+### **Step 4: Test**
+Run your app:
+```bash
+node app.js
+```
+Visit `http://localhost:3000`, and you will see "Welcome to EJS!" displayed.
+
+---
+
+## **3. Using Pug**
+### **Step 1: Install Pug**
+```bash
+npm install pug
+```
+
+### **Step 2: Set Up Pug in Your App**
+In your `app.js`:
+```javascript
+import express from 'express';
+
+const app = express();
+
+// Set the view engine to Pug
+app.set('view engine', 'pug');
+
+// Define a route
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Home Page', message: 'Welcome to Pug!' });
+});
+
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+```
+
+### **Step 3: Create Pug Templates**
+- Create a `views` directory in the root of your project.
+- Add a file `index.pug` inside the `views` directory.
+
+#### `views/index.pug`:
+```pug
+doctype html
+html
+  head
+    title= title
+  body
+    h1= message
+```
+
+### **Step 4: Test**
+Run your app:
+```bash
+node app.js
+```
+Visit `http://localhost:3000`, and you will see "Welcome to Pug!" displayed.
+
+---
+
+## **4. Using Handlebars**
+### **Step 1: Install Handlebars**
+```bash
+npm install express-handlebars
+```
+
+### **Step 2: Set Up Handlebars in Your App**
+In your `app.js`:
+```javascript
+import express from 'express';
+import { engine } from 'express-handlebars';
+
+const app = express();
+
+// Set up Handlebars as the view engine
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
+
+// Define a route
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Home Page', message: 'Welcome to Handlebars!' });
+});
+
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+```
+
+### **Step 3: Create Handlebars Templates**
+- Create a `views` directory in the root of your project.
+- Add a file `index.handlebars` inside the `views` directory.
+
+#### `views/index.handlebars`:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{message}}</h1>
+</body>
+</html>
+```
+
+### **Step 4: Test**
+Run your app:
+```bash
+node app.js
+```
+Visit `http://localhost:3000`, and you will see "Welcome to Handlebars!" displayed.
+
+---
+
+## **5. Comparison of EJS, Pug, and Handlebars**
+| Feature              | EJS                   | Pug                  | Handlebars         |
+|----------------------|-----------------------|----------------------|--------------------|
+| Syntax Style         | HTML with embedded JS | Indentation-based    | HTML with Mustache |
+| Learning Curve       | Easy                 | Moderate             | Easy               |
+| Extensibility        | High                 | Moderate             | High               |
+
+---
+
+These steps and examples will help you set up and use template engines with Express in Node.js effectively.

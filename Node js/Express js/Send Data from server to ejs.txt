@@ -1,0 +1,7 @@
+Data is sended in object and on ejs accesed using keys
+
+
+res.render("filename",{x:10});
+
+On ejs : 
+<%= x %>

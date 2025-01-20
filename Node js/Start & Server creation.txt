@@ -1,0 +1,151 @@
+The official Node.js website has installation instructions for Node.js: https://nodejs.org
+
+use express js module in start file and create server using express module 
+include cors : for security in express js 
+use nodemon server 
+
+Refer Coacing notes to setup basic node app without express
+
+___________________________________________________
+Node js is a enviornment and java script executer  it can executes java script file 
+
+Create a directory to store node js project and move to that directory
+
+When we want to do with react as frontend we have ro make react app in different directory 
+
+
+Create a project :
+
+Step 1 : To create package json type ,  // run express js node init command  for es5 and npm init -y for es6 package.json
+
+Step 2 : Then install express which is a web application frame work 
+
+npm install express --save    // it will upddate package.son file also and 
+node modules folder will be craeted 
+
+Step 3 :
+Then put server code there in a file as mentioned below 
+
+Tips : npn install nodemon : 
+nodemon is a commabd line tool that automatically restart node js server 
+we need to add scripts in pakage.json file in node js 
+"start": "node index.js",
+    "dev": "nodemon index.js"
+
+then move to directory of index.js file and run command 
+npm run dev 
+
+
+First need to create an package.json file  using  npm init 
+How to install :
+npm install express --save
+node_modules named folder is created
+
+After this install nodemon : npm install nodemon
+then mongodb can be installed 
+
+______________________________________
+Once you have downloaded and installed Node.js on your computer, 
+let's try to display "Hello World" in a web browser.
+
+Create a javascript file name index.js (as by default main/entry point in package.json is index.js)  
+and put server start code in it.  We can change entry point file in package.json under main: key
+
+Then install express
+
+npm install express --save 
+
+Include module 
+
+var http = require('http');
+_____________________________________________________
+Create a file and put this code to craete server and all file will be run from here/linked here to run.
+
+var http = require('http');
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World!');
+}).listen(8080);
+
+
+move to directory : and command node myfirst.js
+
+By Express : 
+const express =require('express');
+const app = express();
+
+app.get("/",(req,res)=>{
+    res.send("Server started");
+});
+
+app.listen(5000);
+__________________________________________________
+Other method :
+
+var server = http.createServer(function (req, res) {
+  
+    res.writeHead(200,{'Content-Type':'text/html'});
+    res.end("Sanskar Jaiswal");
+  });
+
+  server.listen(8080,"127.0.0.1",() =>{
+      console.log("server connected ")
+
+});
+
+One another method using express :
+const express =require('express');
+const app = express();
+
+app.get("/",(req,res)=>{
+    res.send("Server started");
+});
+
+app.listen(5000);
+
+___________________________________________________
+
+Code Explain : 
+create server method creates server 
+
+req is parameter for request and res is parameter for response we create response using res.method name and set request condition with req.method name 
+
+writeHead method write status code 
+res.end ('Print last response ')
+
+Listen method also have more 
+
+server is a variable , we can also store create server method result in a variable then do more with using variable .
+
+parameters 1 is 8080 port number , 2 host name , call back function calls on method is executed .
+
+ server.listen(8080,"127.0.0.1",() =>{
+     console.log("server connected ")
+ });
+
+FOR URL see url.txt file 
+
+
+Http module is used of node :
+
+
+
+Then we have to do some work in command line interface :
+1 :
+Navigate to the folder that contains the file "myfirst.js", the command line interface window should look something like this:
+
+2.
+
+Start your command line interface, write 
+node myfirst.js and hit enter:
+
+Now our computer will work as server .
+
+
+press Ctrl +c to stop server .
+
+type this on internet browser
+address: http://localhost:8080
+
+Mongo db : 49.35.139.201/32

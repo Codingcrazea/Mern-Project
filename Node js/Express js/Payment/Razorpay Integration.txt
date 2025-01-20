@@ -1,0 +1,175 @@
+First on razorpay account create api key 
+copy and store live key  & secret key 
+
+Create an env file and store keys by creating variiables 
+
+PORT = 5000
+
+RAZORPAY_API_KEY ="rzp_live_rrRegsiFRtrkLi"
+
+RAZORPAY_API_SECRET ="twuNu2AoG5HidHgi03DVXYIo"
+
+Steps : 
+In Final Method create Instance , options , create orders 
+
+Flow : create order (in which we send meta data of order )
+
+Install Razorpay in React and Node both 
+
+
+Precautions : 
+Do not fetch amount from client or frotend directly fetch product price from cource id 
+
+
+Modules to install : 
+npm i razorpay 
+npm i dotenv 
+
+In index.js : other than normal express code 
+Set config element 
+
+const {config}= require('dotenv');
+config({path:"./config/config.env"});  // set path of .env file 
+
+then code to run server :
+app.listen(process.env.PORT,()=>{
+    console.log("Server connected");
+}); 
+
+Request parameter : 
+amount , currency :string  ,
+receipt
+string
+Receipt number that corresponds to this order, set for your internal reference. Can have a maximum length of 40 characters and has to be unique.
+
+notes
+json object
+Key-value pair that can be used to store additional information about the entity. Maximum 15 key-value pairs, 256 characters (maximum) each. For example, "note_key": "Beam me up Scotty”.
+
+partial_payment
+boolean
+Indicates whether the customer can make a partial payment. Possible values:
+true : The customer can make partial payments.
+false (default) : The customer cannot make partial payments.
+
+first_payment_min_amount
+integer
+Minimum amount that must be paid by the customer as the first partial payment. For example, if an amount of ₹700.00 is to be received from the customer in two installments of #1 - ₹500.00, #2 - ₹200.00, then you can set this value as 50000. This parameter should be passed only if partial_payment is true.
+
+Response parameters : 
+Response Parameters
+id
+string
+The unique identifier of the order.
+
+amount
+integer
+The amount for which the order was created, in currency subunits. For example, for an amount of ₹295.00, enter 29500.
+
+entity
+string
+Name of the entity. Here, it is order.
+
+amount_paid
+integer
+The amount paid against the order.
+
+amount_due
+integer
+The amount pending against the order.
+
+currency
+string
+ISO code for the currency in which you want to accept the payment. The default length is 3 characters.
+
+receipt
+string
+Receipt number that corresponds to this order. Can have a maximum length of 40 characters and has to be unique.
+
+status
+string
+The status of the order. Possible values:
+created: When you create an order it is in the created state. It stays in this state till a payment is attempted on it.
+attempted: An order moves from created to attempted state when a payment is first attempted on it. It remains in the attempted state till one payment associated with that order is captured.
+paid: After the successful capture of the payment, the order moves to the paid state. No further payment requests are permitted once the order moves to the paid state. The order stays in the paid state even if the payment associated with the order is refunded.
+
+attempts
+integer
+The number of payment attempts, successful and failed, that have been made against this order.
+
+notes
+json object
+Key-value pair that can be used to store additional information about the entity. Maximum 15 key-value pairs, 256 characters (maximum) each. For example, "note_key": "Beam me up Scotty”.
+
+created_at
+integer
+Indicates the Unix timestamp when this order was created.
+
+Errors : 
+
+
+
+_________________________
+Codes : 
+For Response success :
+
+{
+  "id": "order_EKwxwAgItmmXdp",
+  "entity": "order",
+  "amount": 50000,
+  "amount_paid": 0,
+  "amount_due": 50000,
+  "currency": "INR",
+  "receipt": "receipt#1",
+  "offer_id": null,
+  "status": "created",
+  "attempts": 0,
+  "notes": [],
+  "created_at": 1582628071
+}
+
+
+__________________________
+Html Response code : 
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "YOUR_KEY_ID", // Enter the Key ID generated from the Dashboard
+    "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Acme Corp",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature)
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>

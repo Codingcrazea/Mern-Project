@@ -1,0 +1,14 @@
+We need to create folders & put files there ,html files are rendered in another way 
+
+Use : Very easy > create absolute path using path module 
+res.sendFile() method : use absolute path 
+
+Create folder public > create css folder & html files in it .
+
+Set path and
+const path = require('path');
+const staticpath = path.join(__dirname,"/routes/p.html");
+app.get('/r',(req,res)=>{
+   res.sendFile(staticpath); // pass path 
+//    res.send();
+});

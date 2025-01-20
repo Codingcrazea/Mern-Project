@@ -1,0 +1,1 @@
+For reference see Home.jsx file for frontend and payment controller for backend and routes also

@@ -1,0 +1,11 @@
+we not need to keep written create server code every , once code server is created then remove code .
+
+if code not work then try in new terminal.
+
+to update file appendfile method is only good. 
+
+
+_________________
+To set new file as main file in package,json
+
+main property : change file name 

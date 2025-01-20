@@ -1,0 +1,28 @@
+First need t create an package.json file  using  npm init 
+How to install :
+npm install express --save
+node_modules named folder is created
+
+After this install nodemon : npm install nodemon
+
+Express is a minimal and flexible Node.js 
+
+web application framework that provides a 
+
+robust set of features to develop web and 
+
+mobile applications. It facilitates the rapid 
+
+development of Node based Web applications.
+
+Why we install in node js ?
+
+It is a Frame work which contain already created codes for specific purposes 
+in form of modules by which we have install and use .
+
+It is installed as an dependency in node js .
+
+First need t create an package.json file  using  npm init 
+How to install :
+npm install express --save
+node_modules named folder is created  

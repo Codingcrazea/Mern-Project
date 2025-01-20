@@ -1,0 +1,153 @@
+Coaching : 
+
+Create a form element in html file :and in its action attribute type name of   url  path 
+
+In below code /action is url path
+
+Url path will be searched in single and multiple server file      
+
+use name attribute in form element 
+
+Methods : 
+Get : data is shown on url
+post : data is not shown on url 
+
+
+in Server File : 
+Make Object of Url : Then Instead of req.url we use UrlObj.pathname == 
+To get data use  UrlObj.query;
+
+Data is in Json form 
+name attribiute of form element is key of data
+
+data.uname
+data.pass
+
+req.method is used to check method of form posting
+Like req.method=="POST"
+
+var myurl = req.url;
+    var UrlObj = url.parse(myurl,true);
+    
+    if (UrlObj.pathname=="/"){
+        var data = fs.readFileSync("./i.htm");
+        if (data!=null){
+            res.write(data);
+            res.end();
+        }
+    } else if (UrlObj.pathname=="/action"){
+       var d = UrlObj.query;   // To get data use  UrlObj.query; 
+       console.log(d);
+
+We can also give response on recieving data : 
+res.write("Ok message recieved");
+        res.end("Good");   // end also can give message
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+To handle forms in a basic Node.js environment, you generally need to:
+
+1. **Set up a basic server using Node.js and Express**.
+2. **Create a form in an HTML file**.
+3. **Send form data to the server**.
+4. **Process the data on the server**.
+
+Here’s a step-by-step guide with code examples:
+
+### 1. **Set Up the Node.js Server**
+
+First, install Express if you haven't already:
+
+```bash
+npm install express body-parser
+```
+
+Create a simple Express server to handle form submissions. Let’s assume you have a file named `server.js`.
+
+```js
+// server.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+
+const app = express();
+const port = 3000;
+
+// Middleware to parse form data
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Serve static files from 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Route to display the form
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'form.html'));
+});
+
+// Route to handle form submission
+app.post('/submit', (req, res) => {
+  const { name, email } = req.body;
+  res.send(`Received the form submission: Name - ${name}, Email - ${email}`);
+});
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
+```
+
+### 2. **Create an HTML Form**
+
+Create a file named `form.html` inside a `public` directory. This form will send data to the server.
+
+```html
+<!-- public/form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Example</title>
+</head>
+<body>
+    <h1>Form Submission</h1>
+    <form action="/submit" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+```
+
+### 3. **Handling Form Data**
+
+In `server.js`, the `app.post('/submit', ...)` route handles the form submission. It uses `body-parser` middleware to parse the form data sent in the POST request. The data is then accessed via `req.body` and can be processed or responded to as needed.
+
+### 4. **Understanding URL Object and Paths**
+
+The URL object and paths are handled by Express routing. In this setup:
+
+- **`app.get('/')`** serves the HTML form from the root path.
+- **`app.post('/submit')`** handles form submissions sent to the `/submit` path.
+
+Express makes routing straightforward, and the URL paths are defined in the route handlers.
+
+By following these steps, you can handle form submissions with basic Node.js and Express. If you need more details on any part, just let me know!

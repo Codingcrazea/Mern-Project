@@ -1,0 +1,4 @@
+Import all exports : 
+import * as variable from " Filepath"
+How to use : 
+variable.function 

@@ -1,0 +1,8 @@
+Npm is a package manager
+
+
+How to download a package 
+
+In terminal 
+
+npm install packagename

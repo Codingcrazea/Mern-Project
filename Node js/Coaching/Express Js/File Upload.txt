@@ -1,0 +1,6 @@
+Use module   : express-fileupload
+
+In main file :
+
+// to allow file input
+app.use(fileUpload());

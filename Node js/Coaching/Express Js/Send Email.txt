@@ -1,0 +1,167 @@
+Fisrt create app password from developer google account : 
+
+Sogn in to google account and Click security > Search app passords > write app name same as node app name and passcode generated 
+  paste it in email sendinf js file at pass key   and remove spaces 
+
+
+Files required : 
+Email Controller that contain code for sending email : 
+
+
+Simple code is this if want to do with mongo db go to down code : 
+
+import NodeMailer from 'nodemailer'
+
+export default function Sendmail(email,otp){
+    var transporter = NodeMailer.createTransport({
+        service:"gmail",
+        auth :{
+            user:"sanjayaswal2003@gmail.com",
+            pass :"kvrbgkmlzxkxxvmj"
+        }
+    });
+
+    var mailO = {
+        from:"sanjayaswal2003@gmail.com",
+        to :email,
+        subject:"Send Otp",
+        html : "<h1> This is Otp "+otp+"</h1>"
+
+    }
+    transporter.sendMail(mailO,(err,result)=>{
+        if(!err){
+            console.log("Otp Sended successfully "+result);
+        }else {
+            console.log("Otp not send "+err);
+        }
+    });
+}
+
+Api url : http://localhost:4000/admin/email  
+
+User Controller file : 
+
+import email from"./email.js"
+import r from 'randomstring'
+
+export var useremail =(req,res,next)=>{
+    var otp = r.generate({length:8,charset:"numeric"});
+    var e = "sjjjaiswal110@gmail.com";
+    try {
+        email(e,otp);
+        res.status(200).json({"status":true,"message":"Register Successfully"});
+    }catch(err) {
+        res.status(400).json({"status":false,"message":"Register Failed.."})
+    }
+    
+}
+
+
+
+
+
+
+We can take user input we want but email is compulsary 
+
+email : is user email to which has to send 
+password : optional not
+otp : otional 
+
+import nodeMailer from 'nodemailer'
+function sendMail(email,password,otp)
+{
+  var transpoter = nodeMailer.createTransport({
+   service:'gmail',
+   auth:{
+      user:'zyadahoshiyar@gmail.com',     // user email 
+      pass:'cbwsnblwhipvjkrx'    // pass is app password that we have created 
+   }
+  });
+
+  var mailOption = {
+    from : "zyadahoshiyar@gmail.com",
+    to: email,
+    subject:'Send OTP From Node Batch 5:00 PM',
+    html: '<h1>Welcome to Node Mailer</h1><p>This is verification mail by My Online E-Shop</p><h2>Username='+email+'<br> Password='+password+'<br> OTP ='+otp+'</h2>'
+  }
+
+  transpoter.sendMail(mailOption,function(err,result){
+    if(!err)
+    {
+       console.log('Succesfully send OTP on Your Mail: ' + result.response);
+    }
+    else
+    {
+        console.log('OTP Not Send : ' +err);
+    }
+  })
+}
+export default sendMail;
+
+
+
+In user controller file we need to fetch email from request and pass it to sendEmail method 
+
+import '../connection/connection.js'
+import userSchemaModel from '../model/userModel.js';
+import sendMail from './emailController.js';
+import rs from 'randomstring'
+
+export var saveUser = async (req,res,next)=>{
+    
+    //Get Data From Request Object
+    var userDetails = req.body;
+    console.log("User Deatils is : "+userDetails);
+
+    //Apply find() method on our collection or fetch all users List
+    var userList = await userSchemaModel.find();
+    console.log("UserList is :"+userList);
+
+    //Find Length;
+    var len = userList.length;
+    console.log("Length of UserList is :"+len);
+
+    //Apply Turnary Operator & Assign id Value
+   var _id = len == 0 ? 1 : userList[len-1]._id+1; 
+
+   console.log("Id is : "+_id);
+
+   //Create Complete Object Details
+   userDetails = {...userDetails,"_id":_id,"role":"user","info":Date()};
+   console.log("Complete User Deatils is : "+userDetails)
+
+  //Exception Handling
+  try{
+    var response = await userSchemaModel.create(userDetails);
+
+    var otp = rs.generate({length:6,charset:'numeric'});
+    console.log("OTP : "+otp)
+
+    sendMail(response.email,response.password,otp);
+
+    //console.log("Register Success : "+JSON.stringify(response));
+    //res.status(200).json({"status":true,"message":"Register Successfully"})
+    res.status(200).json({"status":true,"message":"Register Successfully","otp":otp})
+
+  }catch(err){
+   // console.log("Error is : "+err);
+   res.status(400).json({"status":false,"message":"Register Failed.."})
+  }
+    
+} 
+
+export var loginUser = (req,res,next)=>{
+    
+}
+
+export var updateUser = (req,res,next)=>{
+    
+}
+
+export var deleteUser = (req,res,next)=>{
+    
+}
+
+export var fetchAllUserList = (req,res,next)=>{
+    
+}

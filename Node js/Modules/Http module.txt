@@ -1,0 +1,71 @@
+Http module performs work :
+
+
+Node.js has a built-in module called HTTP, which allows Node.js to transfer data over the Hyper Text Transfer Protocol (HTTP).
+
+The HTTP module can create an HTTP server that listens to server ports and gives a response back to the client.
+
+
+________________________________________________________
+2. Use the createServer() method to create an HTTP server:
+
+Add an HTTP Header
+If the response from the HTTP server is supposed to be displayed as HTML, you should include an HTTP header with the correct content type:
+
+Example
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write('Hello World!');
+  res.end();
+}).listen(8080);
+
+
+________________________________________________________________
+
+Read query string
+
+Read the Query String
+The function passed into the http.createServer() has a req argument that represents the request from the client, 
+as an object (http.IncomingMessage object).
+
+This object has a property called "url" which holds the part of the url that comes after the domain name:
+
+demo_http_url.js
+
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write(req.url);
+  res.end();
+}).listen(8080);
+
+
+
+Save the code above in a file called "demo_http_url.js" and initiate the file:
+
+Initiate demo_http_url.js:
+
+C:\Users\Your Name>node demo_http_url.js
+
+
+
+__________________________________________________________________
+
+Split the Query String
+There are built-in modules to easily split the query string into readable parts, such as the URL module.
+
+Example
+Split the query string into readable parts:
+
+var http = require('http');
+var url = require('url');
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  var q = url.parse(req.url, true).query;
+  var txt = q.year + " " + q.month;
+  res.end(txt);
+}).listen(8080);
+
+
